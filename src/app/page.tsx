@@ -1,20 +1,16 @@
-import styles from "./page.module.css";
-import "bootstrap/dist/css/bootstrap.min.css"
+// import styles from "./page.module.css";
 import Link from "next/link";
-import {Button, Container, Stack} from "react-bootstrap"
 
-export default function Home() {
+
+export default async function Home() {
+
+
   return (
-    <Container className="py-4 h-100 d-flex flex-column justify-content-center align-items-center">
-    <h1>Welcome to Superate</h1>
-    <Stack direction="horizontal" gap={2}>
-    <Button variant="primary">
-      <Link href="/verification" className={`link-underline-none ${styles.verifyLink}`}>Go to Verifications</Link>
-    </Button>
-    {/* <Button variant="outline-primary">
-      <Link href="/verification" className="text-no-underline">Go to Verifications</Link>
-    </Button> */}
-    </Stack>
-    </Container>
+    <main className="flex items-center justify-center gap-9 flex-col h-dvh">
+      <h1 className="font-bold text-gray-800 text-5xl mt-4">Superate App</h1>
+    <div className="inline">
+      <Link href="/verification" className="btn rounded-xl p-4 bg-sky-700 text-white">Go to verification dashboard</Link>
+    </div>
+    </main>
   );
 }
