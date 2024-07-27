@@ -1,0 +1,24 @@
+.container {
+}
+
+.title {
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.actionList {
+    margin-top: 1em;
+}
+
+.actionList .listItem {
+    margin-inline: 1rem;
+    padding: .5em;
+    background-color: #ffffffa5;
+    border-radius: .5rem;
+}
+
+
+.actionList li a {
+    padding: 3em 2em;
+}

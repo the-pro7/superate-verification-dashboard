@@ -2,7 +2,8 @@ import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
 import InfoCard from "@/components/card/Card";
-
+import styles from "./page.module.css"
+import { ChartComponent } from "@/components/chart-component/ChartComponent";
 
 // GET data
 const getData = async (base_url = "") => {
@@ -25,16 +26,10 @@ const getData = async (base_url = "") => {
   }
 };
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-];
-
 export const metadata: Metadata = {
   title: "Verification Dashboard",
   description: "Verifications dashboard",
 };
-
 
 const Page: React.FC = async () => {
   const data: object[] = await getData(process.env.API_ADMIN_BASE_URL);
@@ -43,24 +38,27 @@ const Page: React.FC = async () => {
 
   return (
     <main className="p-4 w-full col-span-3">
-      <div className="w-max">
+      <div className="w-max bg-gray-100 hover:bg-gray-200 px-3 py-2 flex items-center gap-3 rounded-md">
         <Link href={".."} className="btn text-sky-600 text-lg">
           Back
         </Link>{" "}
         <span>&gt; Verifications Dashboard</span>
       </div>
-      <div className="grid grid-cols-2 gap-3 lg:gap-0 lg:grid-cols-3 w-full mt-4">
+      <div className={`${styles.cardContainer} mt-5`}>
         <InfoCard
           dataLength={dataLength}
           text="Brands Joined"
-          linkText="View All"
+          linkText="Verification Details"
+          imgSrc="/brands.svg"
         />
         <InfoCard
           dataLength={dataLength}
           text="Influencers Joined"
-          linkText="View All"
+          linkText="Verification Details"
+          imgSrc="/influencer.svg"
         />
       </div>
+      {/* <ChartComponent /> */}
     </main>
   );
 };

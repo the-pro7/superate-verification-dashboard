@@ -59,6 +59,10 @@
   }
 }
 
+:root {
+  --light-gray: gray;
+}
+
 /* @layer base {
   * {
     @apply border-border;

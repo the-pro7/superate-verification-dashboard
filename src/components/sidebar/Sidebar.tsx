@@ -1,16 +1,23 @@
-import { Link } from 'lucide-react'
-import React from 'react'
+import Link from "next/link";
+import React from "react";
+import styles from "./Sidebar.module.css"
 
 const Sidebar = () => {
   return (
-    <aside className='border p-4'>
-      <div className='flex items-center flex-col'>
-        <h1 className='text-3xl sm:text-2xl font-bold text-center'>Superate</h1>
-    <span className='text-slate-500 text-sm sm:text-center'>ADMIN VERIFICATIONS</span>
+    <aside className={`${styles.container} bg-gray-100`}>
+      <div className="flex item-center justify-center flex-col gap-1">
+        <h1 className={`${styles.title}`}>Superate</h1>
+        <span className={`${styles.subtext} text-center text-slate-600 text-sm font-light`}>- ADMIN VERIFICATIONS -</span>
       </div>
-      <Link href="/brands/add-verification-info">Add Brand Verification Info</Link>
+      <ul className={`${styles.actionList}`}>
+        <li className={styles.listItem}>
+          <Link href="verification/brands/add-verification-info" className="py-4">
+            Add Brand Verification
+          </Link>
+        </li>
+      </ul>
     </aside>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
