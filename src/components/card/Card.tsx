@@ -8,14 +8,14 @@ type PropTypes = {
     linkText: string
 }
 
-const Card = ({dataLength, text, linkText}: PropTypes) => {
+const InfoCard = ({dataLength, text, linkText}: PropTypes) => {
   return (
-    <div className='p-4 shadow-sm max-w-sm w-fit rounded-md overflow-hidden flex flex-col gap-3'>
+    <div className='mt-4 p-4 shadow-lg max-w-md lg:w-max w-full rounded-md overflow-hidden flex flex-col gap-3'>
         <h4 className='text-xl font-semibold'>{text}</h4>
-        <div className='text-3xl font-bold'>{dataLength}</div>
-        <Link href="/" className='bg-sky-600 px-4 py-3 text-white font-semibold rounded-md w-fit'>{linkText}</Link>
+        <div className='text-3xl font-bold text-center'>{dataLength}</div>
+        <Link href="/" className='btn bg-sky-600 px-4 py-2 text-white font-semibold rounded-md w-full text-center'>{linkText}</Link>
     </div>
   )
 }
 
-export default Card
+export default InfoCard
