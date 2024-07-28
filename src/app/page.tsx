@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 
-export default async function Home() {
+export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>("");
@@ -31,7 +31,7 @@ export default async function Home() {
         width={75}
         height={75}
         alt="Superate logo main"
-        className="rounded-full bg-red-100"
+        className="rounded-full bg-red-100 shadow-lg"
       />
       <h1 className="font-bold text-gray-800 text-5xl mt-4">Superate App</h1>
       <div className="inline">
