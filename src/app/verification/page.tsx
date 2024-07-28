@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from "react";
 import InfoCard from "@/components/card/Card";
 import styles from "./page.module.css"
+
 import { ChartComponent } from "@/components/chart-component/ChartComponent";
 
 // GET data
@@ -33,16 +34,13 @@ export const metadata: Metadata = {
 
 const Page: React.FC = async () => {
   const data: object[] = await getData(process.env.API_ADMIN_BASE_URL);
-  // console.log("Data received" + JSON.stringify(data))
   const dataLength: number | null = data?.length;
 
   return (
     <main className="p-4 w-full col-span-3">
-      <div className="w-max bg-gray-100 hover:bg-gray-200 px-3 py-2 flex items-center gap-3 rounded-md">
-        <Link href={".."} className="btn text-sky-600 text-lg">
-          Back
-        </Link>{" "}
-        <span>&gt; Verifications Dashboard</span>
+      <div>
+        <h2 className="font-semibold text-xl">Hello Admin</h2>
+        <span className="text-xs text-slate-500 font-light">Admin Dashboard</span>
       </div>
       <div className={`${styles.cardContainer} mt-5`}>
         <InfoCard

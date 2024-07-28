@@ -1,0 +1,18 @@
+<form className="overflow-y-clip">
+        <div className={`${styles.formGroup}`}>
+          <label htmlFor=""></label>
+          <input type="text" placeholder="Enter full legal name"/>
+        </div>
+        <div className={`${styles.formGroup}`}>
+          <label htmlFor=""></label>
+          <input type="text" placeholder="Country"/>
+        </div>
+        <div className={`${styles.formGroup}`}>
+          <label htmlFor="selfie_image"></label>
+          <input type="file" id="selfie_image" title="Attach an image file"/>
+        </div>
+        {/* <div className={`${styles.formGroup}`}>
+          <label htmlFor="gov_bussiness_id_number"></label>
+          <input type="text" />
+        </div> */}
+      </form>
