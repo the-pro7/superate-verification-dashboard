@@ -1,7 +1,7 @@
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./layout.module.css";
 import React from "react";
-import FormProvider from "@/contexts/FormProvider";
+import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton";
 
 type Props = {
   children: React.ReactNode;
@@ -10,10 +10,10 @@ type Props = {
 const Layout = ({ children }: Props) => {
   return (
     <div className={styles.container}>
-      <FormProvider>
+      <SidebarProvider>
         <Sidebar />
         {children}
-      </FormProvider>
+      </SidebarProvider>
     </div>
   );
 };

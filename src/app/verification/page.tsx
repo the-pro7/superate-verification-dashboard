@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
-import InfoCard from "@/components/card/Card";
 import styles from "./page.module.css"
 
 import { ChartComponent } from "@/components/chart-component/ChartComponent";
@@ -33,30 +32,13 @@ export const metadata: Metadata = {
 };
 
 const Page: React.FC = async () => {
-  const data: object[] = await getData(process.env.API_ADMIN_BASE_URL);
-  const dataLength: number | null = data?.length;
 
   return (
-    <main className="p-4 w-full col-span-3">
-      <div>
+    <main className="p-4 w-full col-span-4">
+      <div className="">
         <h2 className="font-semibold text-xl">Hello Admin</h2>
         <span className="text-xs text-slate-500 font-light">Admin Dashboard</span>
       </div>
-      <div className={`${styles.cardContainer} mt-5`}>
-        <InfoCard
-          dataLength={dataLength}
-          text="Brands Joined"
-          linkText="Verification Details"
-          imgSrc="/brands.svg"
-        />
-        <InfoCard
-          dataLength={dataLength}
-          text="Influencers Joined"
-          linkText="Verification Details"
-          imgSrc="/influencer.svg"
-        />
-      </div>
-      {/* <ChartComponent /> */}
     </main>
   );
 };

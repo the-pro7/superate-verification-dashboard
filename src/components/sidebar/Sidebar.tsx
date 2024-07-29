@@ -1,23 +1,28 @@
-import React from "react";
+"use client";
+import React, { useContext } from "react";
 import styles from "./Sidebar.module.css";
 import SideBarList from "./sidebar-list/SideBarList";
-import Link from "next/link";
 import Image from "next/image";
+import ExpandSidebarButton, {
+  SideBarContext,
+  useExpandSidebar,
+} from "../expand-sidebar/ExpandSidebarButton";
+import { RxExit } from "react-icons/rx";
 
 const Sidebar = () => {
+  const {expandSidebar} = useContext(SideBarContext)
   return (
-    <aside className={`${styles.container} dark:bg-gray-900 bg-gray-100`}>
-      <div className="flex gap-2 p-3 items-center text-gray-900 m-1 rounded-lg">
-        <div
-          className={`${styles.logo} w-12 aspect-square rounded-full flex-initial bg-gray-100 overflow-clip relative`}
-        >
-          <Image src="/logo.png" fill sizes="30px" alt="Superate logo" />
-        </div>
-        <h1 className={`${styles.title} text-2xl font-semibold`}>
-          <Link href="/">Superate</Link>
-        </h1>
+    <aside
+      className={`${styles.container} ${expandSidebar && "w-3/4 col-span-2"} z-50 dark:bg-gray-900 bg-gray-200  w-2/5 p-4 flex items-center flex-col gap-3 relative`}
+    >
+      <ExpandSidebarButton />
+      <div className={`w-20 h-20 rounded-full overflow-clip bg-white relative ${expandSidebar && "mr-auto"}`}>
+        <Image src="/logo.png" fill alt="Superate logo" />
       </div>
       <SideBarList />
+      <button title="logout" type="button" className={`mt-auto p-5 rounded-lg hover:bg-white rotate-180 ${expandSidebar && "ml-auto"}`}>
+        <RxExit className="text-xl"/>
+      </button>
     </aside>
   );
 };

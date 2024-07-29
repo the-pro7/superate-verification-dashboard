@@ -6,17 +6,20 @@ type SideBarLinkProps = {
   path: string;
   title?: string;
   linkText: string;
-  icon?: React.ReactNode;
+  className: string,
+  children: React.ReactNode
 };
 
-const SideBarLink = ({ path, title, linkText, icon }: SideBarLinkProps) => {
+const SideBarLink = ({ path, title, linkText, className, children }: SideBarLinkProps) => {
   return (
-    <li className="mx-2 mt-1 border p-2 rounded-sm flex items-center">
-      <Link href={path} title={title} className="inline-flex items-center justify-center gap-3">
-        {icon}
-        {linkText}
-      </Link>
-    </li>
+    <Link
+      href={path}
+      title={title}
+      className={className}
+    >
+      {linkText}
+      {children}
+    </Link>
   );
 };
 
