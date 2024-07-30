@@ -7,29 +7,25 @@ import { SideBarContext } from "@/components/expand-sidebar/ExpandSidebarButton"
 import { FaUserCheck, FaUserXmark } from "react-icons/fa6";
 import { GoChecklist } from "react-icons/go";
 
-// function shortenText(text: string = ""): string {
-//   if (text.length > 30) {
-//     return text.substring(0, 30) + "...";
-//   }
 
-//   return text;
-// }
 
 const SideBarList = () => {
+  // Use sidebar context from provider
   const { expandSidebar } = useContext(SideBarContext);
+
   return (
     <div
       className={`flex flex-col items-start ${
-        !expandSidebar && "items-center justify-center -ml-0"
-      } gap-4 mt-3 -ml-7`}
+        !expandSidebar && "items-center justify-center ml-0"
+      } gap-6 mt-3 -ml-7`}
     >
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center gap-2 w-full ${!expandSidebar && "w-fit"} rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all`}
+        className={`flex items-center gap-2 w-full ${!expandSidebar && "w-fit"} rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all bg-white`}
       >
         <SideBarLink
-          path="/verification"
+          path="/admin/dashboard"
           title="Dashboard"
           linkText={`${!expandSidebar ? "" : "Dashboard"}`}
           className={`inline-flex items-center flex-row-reverse gap-3`}
@@ -40,10 +36,10 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"} bg-white`}
       >
         <SideBarLink
-          path="/verification?currentView=overview"
+          path="/admin/dashboard/verification-overview?role=brand"
           title="Overview"
           linkText={`${!expandSidebar ? "" : "Overview"}`}
           className={`inline-flex items-center flex-row-reverse justify-center gap-3 `}
@@ -54,7 +50,7 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center justify-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center justify-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"} bg-white`}
       >
         <SideBarLink
           path="/verification"
@@ -68,7 +64,7 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center  gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center  gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"} bg-white`}
       >
         <SideBarLink
           path="/verification"

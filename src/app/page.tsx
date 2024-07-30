@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
+import {IoClose} from "react-icons/io5"
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>("");
+
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -41,7 +43,7 @@ export default function Home() {
           type="button"
           onClick={() => {
             if (accessToken) {
-              router.push("/verification");
+              router.push("/admin");
             }
 
             openDialog();
@@ -50,13 +52,14 @@ export default function Home() {
           Go to verification dashboard
         </button>
       </div>
-      <dialog ref={dialogRef} className="p-4 w-1/4 overflow-clip rounded-lg">
+      <dialog ref={dialogRef} className="p-4 w-4/12 overflow-clip rounded-lg">
         <Button
           type="button"
           onClick={closeDialog}
-          className="text-xs font-light bg-gray-500 text-white hover:bg-black ml-auto"
+          title="Close Dialog"
+          className="font-light bg-gray-500 text-white hover:bg-black !ml-auto mb-3"
         >
-          Close
+          <IoClose className="text-xl"/>
         </Button>
         <h2 className="text-xl font-semibold tracking-wider">Authentication</h2>
         <LoginForm />

@@ -115,7 +115,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="inline-flex items-center gap-1 ml-auto">
+        <Button type="submit" disabled={loading} className="inline-flex items-center gap-1 self-end">
           {loading && (
             <RotatingLines
               visible={true}
