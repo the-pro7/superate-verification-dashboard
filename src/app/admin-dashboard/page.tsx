@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import React from "react";
-import styles from "./page.module.css"
+import styles from "./page.module.css";
 
 import { ChartComponent } from "@/components/chart-component/ChartComponent";
 import TopNav from "@/components/dashboard-topnav/TopNav";
@@ -33,10 +33,14 @@ export const metadata: Metadata = {
 };
 
 const Page: React.FC = async () => {
-
   return (
     <main className="p-4 w-full col-span-4 -ml-16">
-      <TopNav pageText="Control Panel"/>
+      <TopNav pageText="Control Panel" />
+      <div className="h-11/12 flex items-center justify-center">
+        <h1 className="text-4xl font-black tracking-wider">
+          Nothing to see here
+        </h1>
+      </div>
     </main>
   );
 };

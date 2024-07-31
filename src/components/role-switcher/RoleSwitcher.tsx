@@ -1,12 +1,14 @@
 "use client";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
+
+type RoleType = "brand" | "influencer" | string
 
 export type RoleSwitchType = {
   role: string;
-  switchRole: (role: "brand" | "influencer") => void;
+  switchRole: (role: RoleType) => void;
 };
+
+
 
 export const RoleSwitchContext = React.createContext<RoleSwitchType>({
   role: "brand",
@@ -18,10 +20,21 @@ export const RoleSwitchProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [role, setRole] = useState<"brand" | "influencer">("brand");
+  const [role, setRole] = useState<RoleType>("brand");
 
-  const switchRole = (role: "brand" | "influencer") => {
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role")
+
+    if(typeof storedRole === "string") {
+      setRole(storedRole)
+    }
+
+
+  }, [])
+
+  const switchRole = (role: RoleType) => {
     setRole(role);
+    localStorage.setItem("role", role)
   };
 
   return (
@@ -34,40 +47,26 @@ export const RoleSwitchProvider = ({
 const RoleSwitcher: React.FC = () => {
   const { role, switchRole } = useContext(RoleSwitchContext);
   return (
-    <div className="flex items-center justify-center border-2 rounded-lg w-max border-collapse overflow-clip">
+    <div className="flex items-center justify-center border-2 rounded-lg w-max border-collapse overflow-clip mr-8">
       <button
-        title="Brands"
+        title="View for Brands"
         type="button"
         onClick={() => switchRole("brand")}
         className={`p-3 hover:bg-gray-200 border-r ${
           role === "brand" && "bg-gray-200"
         }`}
       >
-        <Link
-          href={{
-            pathname: "/admin/dashboard/verification-overview",
-            query: { role: "brand" },
-          }}
-        >
-          Brands
-        </Link>
+        Brands
       </button>
       <button
-        title="View for influencer"
+        title="View for Influencers"
         type="button"
         onClick={() => switchRole("influencer")}
         className={`p-3 hover:bg-gray-200 border-l ${
           role == "influencer" && "bg-gray-200"
         }`}
       >
-        <Link
-          href={{
-            pathname: "/admin/dashboard/verification-overview",
-            query: { role: "influencer" },
-          }}
-        >
-          Influencers
-        </Link>
+        Influencers
       </button>
     </div>
   );

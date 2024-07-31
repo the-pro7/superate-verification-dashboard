@@ -37,6 +37,7 @@ export default function LoginForm() {
   const router = useRouter()
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+   if(navigator.onLine) {
     try {
       setLoading(true);
       const { access, refresh, user } = await login(values);
@@ -46,16 +47,18 @@ export default function LoginForm() {
       if (access && refresh && user) {
         localStorage.setItem("accessToken", access);
         localStorage.setItem("refreshToken", refresh);
-        router.push("/verification")
+        router.push("/admin-dashboard")
       }
     } catch (error) {
       setLoading(false);
       console.error(error);
     } finally {
       setLoading(false);
-    }
+    } 
+   } else {
+    alert("You're not online, connect to a network")
+   }
   }
-  // ...
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),

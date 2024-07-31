@@ -17,8 +17,8 @@ const SideBarLink = ({ path, title, linkText, className, children }: SideBarLink
       title={title}
       className={className}
     >
-      {linkText}
       {children}
+      {linkText}
     </Link>
   );
 };

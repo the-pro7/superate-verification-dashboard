@@ -8,17 +8,17 @@ type TopNavProps = {
 
 const TopNav = ({ pageText }: TopNavProps) => {
   return (
-    <nav className="flex justify-between w-11/12 mx-auto items-center py-4">
-      <h1 className="text-2xl font-bold tracking-wide">{pageText}</h1>
+    <nav className="flex justify-between w-full items-center py-6 pr-7">
+      <h1 className="text-2xl font-bold tracking-wider">{pageText}</h1>
       <div className="flex items-center justify-center gap-1 bg-gray-100 rounded-full py-2 px-5">
         <input
           type="search"
           name="verification-searchbox"
-          placeholder="Search Verifications..."
-          title="Search a verification detail"
-          className="[all:unset] px-5 placeholder:font-light"
+          placeholder="Search something..."
+          title="Search something..."
+          className="[all:unset] py-2 px-5 placeholder:font-light border-2 border-gray-500"
         />
-        <FaMagnifyingGlass className="text-gray-600 text-xl" />
+        <FaMagnifyingGlass className="text-gray-500 text-xl" />
       </div>
     </nav>
   );

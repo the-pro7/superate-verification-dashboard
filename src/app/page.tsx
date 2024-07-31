@@ -4,13 +4,12 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
-import {IoClose} from "react-icons/io5"
+import { IoClose } from "react-icons/io5";
 
 export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>("");
-
 
   useEffect(() => {
     if (typeof window != "undefined") {
@@ -35,12 +34,13 @@ export default function Home() {
         alt="Superate logo main"
         className="rounded-full bg-red-100 shadow-lg"
       />
-      <h1 className="font-bold text-gray-800 text-5xl mt-4">Superate App</h1>
+      <h1 className="font-black text-gray-800 text-5xl mt-4">Superate App</h1>
       <div className="inline">
         {/* <Link href="/verification" className="btn rounded-xl p-4 bg-sky-700 text-white">Go to verification dashboard</Link> */}
         <button
           className="btn bg-sky-500 p-4 rounded-lg text-white tracking-widest"
           type="button"
+          title="Go to admin verifications dashboard"
           onClick={() => {
             if (accessToken) {
               router.push("/admin");
@@ -59,7 +59,7 @@ export default function Home() {
           title="Close Dialog"
           className="font-light bg-gray-500 text-white hover:bg-black !ml-auto mb-3"
         >
-          <IoClose className="text-xl"/>
+          <IoClose className="text-xl" />
         </Button>
         <h2 className="text-xl font-semibold tracking-wider">Authentication</h2>
         <LoginForm />

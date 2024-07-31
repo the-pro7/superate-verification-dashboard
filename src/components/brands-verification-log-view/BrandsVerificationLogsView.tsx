@@ -1,24 +1,58 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import VerificationLog from "../verification-log/VerificationLog";
 import { getBrandsVerificationDetails } from "@/utils/dataFetch";
-import useSWR from "swr";
+// import useSWR from "swr";
 import { IBrandVerificationType } from "@/types/brand-verification-type";
 
-const fetcher = (...args: [RequestInfo, RequestInit?]) =>
-  fetch(...args).then((res) => res.json());
-
 const BrandsVerificationLogsView = () => {
-  const { data, error } = useSWR<IBrandVerificationType>(
-    `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}/brands-verification-details`,
-    fetcher
-  );
+  const accessToken: string | null = localStorage.getItem("accessToken");
 
-  if (error) console.log(error);
+  // State
+  const [data, setData] = useState<IBrandVerificationType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (typeof accessToken === "string") {
+        try {
+          const dataReceived =
+            await getBrandsVerificationDetails<IBrandVerificationType>(
+              accessToken
+            );
+
+          if (dataReceived !== undefined) {
+            setData(dataReceived);
+          } else {
+            throw new Error("No data was returned from the server");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [accessToken]);
 
   console.log(data);
 
-  return <div>BrandsVerificationLogsView</div>;
+  return (
+    <div>
+      {data && data.length != 0 ? (
+        data.map((item: IBrandVerificationType) => (
+          <VerificationLog
+            key={item.id}
+            fullLegalName={item.full_legal_name}
+            selfieImage={item.selfie_image}
+            location={item.location}
+          />
+        ))
+      ) : (
+        <h1>No brands verifications to view</h1>
+      )}
+    </div>
+  );
 };
 
 export default BrandsVerificationLogsView;
