@@ -1,5 +1,6 @@
+"use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { LuEye } from "react-icons/lu";
 import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
@@ -11,9 +12,29 @@ interface IVerificationLogType {
   location: string
 }
 
+interface IDeclinationPopupType {
+  showDeclinationPopup: boolean,
+  toggleShowDeclinationPopup: () => void
+}
+
+const DeclinationPopupContext = React.createContext<IDeclinationPopupType>({
+  showDeclinationPopup: false,
+  toggleShowDeclinationPopup: () => {}
+})
+
+const DeclinationPopupProvider = (children: {children: React.ReactNode}) => {
+  const [showDeclinationPopup, setShowDeclinationPopup] = useState<boolean>(false)
+
+  const toggleShowDeclinationPopup = (value: boolean) => setShowDeclinationPopup(value)
+  
+  return <DeclinationPopupContext.Provider value={{showDeclinationPopup, toggleShowDeclinationPopup}}>
+    {children}
+  </DeclinationPopupContext.Provider>
+}
+
 const VerificationLog = ({selfieImage, fullLegalName, location}: IVerificationLogType) => {
   return (
-    <div className="flex items-center justify-between px-4 rounded-lg shadow-xl py-2 bg-white w-full mt-5">
+    <div className="flex items-center justify-between px-4 rounded-lg shadow-xl py-2 bg-white w-11/12 mt-5 transition-all hover:-translate-y-2 hover:scale-75">
       <div className="flex gap-3 items-center">
       <div className="relative w-12 h-12 rounded-full bg-gray-200 overflow-clip">
         <Image src={selfieImage} alt="" fill className="object-cover" />

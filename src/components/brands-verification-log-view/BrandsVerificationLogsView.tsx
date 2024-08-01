@@ -35,7 +35,7 @@ const BrandsVerificationLogsView = () => {
     fetchData();
   }, [accessToken]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>

@@ -20,8 +20,8 @@ import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(8, {
+    message: "Username must be at least 8 characters.",
   }),
   email: z.string().email({
     message: "An email is required to continue",
@@ -118,7 +118,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="inline-flex items-center gap-1 self-end">
+        <Button type="submit" disabled={loading} className="inline-flex items-center gap-1">
           {loading && (
             <RotatingLines
               visible={true}
@@ -132,7 +132,7 @@ export default function LoginForm() {
               wrapperClass=""
             />
           )}
-          Submit
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </form>
     </Form>

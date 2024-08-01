@@ -1,5 +1,5 @@
 "use client";
-import LoginForm from "@/components/form/LoginForm";
+import LoginForm from "@/components/form/login-form/LoginForm";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -43,7 +43,7 @@ export default function Home() {
           title="Go to admin verifications dashboard"
           onClick={() => {
             if (accessToken) {
-              router.push("/admin");
+              router.push("/admin-dashboard");
             }
 
             openDialog();
