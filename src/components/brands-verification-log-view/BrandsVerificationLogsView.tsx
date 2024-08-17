@@ -2,12 +2,17 @@
 import React, { useEffect, useState } from "react";
 import VerificationLog from "../verification-log/VerificationLog";
 import { getBrandsVerificationDetails } from "@/utils/dataFetch";
-// import useSWR from "swr";
 import { IBrandVerificationType } from "@/types/brand-verification-type";
+import {useQuery} from "@tanstack/react-query"
 
-const BrandsVerificationLogsView = () => {
+const BrandsVerificationLogsView = ({query}: {query?: string}) => {
   const accessToken: string | null = localStorage.getItem("accessToken");
 
+  // const queryNew = useQuery({
+  //   queryKey: ["brands"],
+  //   queryFn: () => getBrandsVerificationDetails<IBrandVerificationType>(accessToken!)
+  // })
+  
   // State
   const [data, setData] = useState<IBrandVerificationType[]>([]);
   const [isLoading, setIsLoading] = useState(false);

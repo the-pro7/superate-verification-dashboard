@@ -4,17 +4,14 @@ import React from "react";
 import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton";
 import { RoleSwitchProvider } from "@/components/role-switcher/RoleSwitcher";
 
-type Props = {
-  children: React.ReactNode;
-};
 
-const Layout = ({ children }: Props) => {
+const Layout = ({ children }: {children: React.ReactNode}) => {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} justify-between md:flex-col-reverse lg:flex-row relative`}>
       <SidebarProvider>
         <RoleSwitchProvider>
           <Sidebar />
-          {children}
+          <main className="w-full px-8">{children}</main>
         </RoleSwitchProvider>
       </SidebarProvider>
     </div>

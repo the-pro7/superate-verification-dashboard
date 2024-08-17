@@ -15,9 +15,9 @@ const SideBarList = () => {
 
   return (
     <div
-      className={`flex flex-col items-center ${
+      className={`flex lg:flex-col md:flex-row items-center ${
         !expandSidebar && "items-center justify-center ml-0"
-      } gap-6 mt-3 -ml-7`}
+      } gap-6 md:gap-8 mt-3 -ml-7`}
     >
       <button
         type="button"

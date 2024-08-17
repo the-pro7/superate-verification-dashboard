@@ -13,14 +13,14 @@ const Sidebar = () => {
   const { expandSidebar } = useContext(SideBarContext);
   return (
     <aside
-      className={`${styles.container} ${
-        expandSidebar && "w-3/4 col-span-2"
-      } z-50 dark:bg-gray-900 bg-gray-200  w-2/5 p-4 flex items-center flex-col gap-3 relative`}
+      className={`${styles.container} !max-w-[100px] lg:mb-0 lg:shadow-none lg:w-[12.35%] ${
+        expandSidebar && "lg:!w-[30%] md:w-1/2 lg:!max-w-none"
+      } z-50 bg-gray-200 p-4 flex items-center lg:flex-col md:flex-row md:w-4/5 md:mx-auto md:justify-between md:mb-3 md:rounded-lg md:!max-w-none gap-3 md:shadow-lg lg:relative md:absolute inset-x-0`}
     >
       <ExpandSidebarButton />
       <div
         className={`flex gap-2 items-center justify-start mr-auto ${
-          !expandSidebar && "gap-0 justify-normal"
+          !expandSidebar && "gap-0 justify-center !mr-0"
         }`}
       >
         <div

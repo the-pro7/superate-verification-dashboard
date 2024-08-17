@@ -35,7 +35,7 @@ const login = async (reqBody: ILoginProps) => {
 
 // GET
 // api/admin/admin/brands-verification-details
-const getBrandsVerificationDetails = async <T>(accessToken: string) => {
+const getBrandsVerificationDetails = async <T>(accessToken: string): Promise<T[]> => {
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -59,6 +59,7 @@ const getBrandsVerificationDetails = async <T>(accessToken: string) => {
     return data;
   } catch (error) {
     console.log(error);
+    return []
   }
 };
 

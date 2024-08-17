@@ -31,12 +31,15 @@ const formSchema = z.object({
   }),
 });
 
+type UserForm = z.infer<typeof formSchema>
+
 export default function LoginForm() {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null | unknown>("");
 
   const router = useRouter()
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: UserForm) {
    if(navigator.onLine) {
     try {
       setLoading(true);
@@ -52,15 +55,17 @@ export default function LoginForm() {
     } catch (error) {
       setLoading(false);
       console.error(error);
+      setError(error)
     } finally {
       setLoading(false);
+      setError("")
     } 
    } else {
     alert("You're not online, connect to a network")
    }
   }
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
@@ -79,11 +84,11 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Enter username" {...field} type="text" />
+                <Input placeholder="Enter username" {...field} type="text" autoFocus />
               </FormControl>
-              <FormDescription>
+              {/* <FormDescription>
                 This is your public display username.
-              </FormDescription>
+              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -118,7 +123,7 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="inline-flex items-center gap-1">
+        <Button type="submit" disabled={loading} className="inline-flex items-center font-medium gap-1 px-4 tracking-widest">
           {loading && (
             <RotatingLines
               visible={true}
@@ -128,7 +133,7 @@ export default function LoginForm() {
               strokeWidth="2"
               animationDuration="0.75"
               ariaLabel="rotating-lines-loading"
-              wrapperStyle={{}}
+              // wrapperStyle={{}}
               wrapperClass=""
             />
           )}
