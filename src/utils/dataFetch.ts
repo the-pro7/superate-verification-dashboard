@@ -1,9 +1,12 @@
+// const accessToken: string | null = localStorage.getItem("accessToken") || null
 interface ILoginProps {
   username: string;
   email: string;
   password: string;
 }
 
+// POST
+// api/auth/login
 const login = async (reqBody: ILoginProps) => {
   try {
     const fetchOptions = {
@@ -30,4 +33,34 @@ const login = async (reqBody: ILoginProps) => {
   }
 };
 
-export { login };
+// GET
+// api/admin/admin/brands-verification-details
+const getBrandsVerificationDetails = async <T>(accessToken: string): Promise<T[]> => {
+  const fetchOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  // Make the call
+  try {
+    let response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}/brand-verification-details/`,
+      fetchOptions
+    );
+
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+
+    let data: T[] = await response.json();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return []
+  }
+};
+
+export { login, getBrandsVerificationDetails };

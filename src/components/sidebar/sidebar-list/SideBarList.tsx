@@ -7,32 +7,28 @@ import { SideBarContext } from "@/components/expand-sidebar/ExpandSidebarButton"
 import { FaUserCheck, FaUserXmark } from "react-icons/fa6";
 import { GoChecklist } from "react-icons/go";
 
-// function shortenText(text: string = ""): string {
-//   if (text.length > 30) {
-//     return text.substring(0, 30) + "...";
-//   }
 
-//   return text;
-// }
 
 const SideBarList = () => {
+  // Use sidebar context from provider
   const { expandSidebar } = useContext(SideBarContext);
+
   return (
     <div
-      className={`flex flex-col items-start ${
-        !expandSidebar && "items-center justify-center -ml-0"
-      } gap-4 mt-3 -ml-7`}
+      className={`flex lg:flex-col md:flex-row items-center ${
+        !expandSidebar && "items-center justify-center ml-0"
+      } gap-6 md:gap-8 mt-3 -ml-7`}
     >
       <button
         type="button"
-        title="sdsds"
-        className={`flex items-center gap-2 w-full ${!expandSidebar && "w-fit"} rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all`}
+        title="Dashboard"
+        className={`flex items-center gap-2 w-full ${!expandSidebar && "w-fit"} rounded-lg overflow-clip`}
       >
         <SideBarLink
-          path="/verification"
+          path="/admin-dashboard"
           title="Dashboard"
           linkText={`${!expandSidebar ? "" : "Dashboard"}`}
-          className={`inline-flex items-center flex-row-reverse gap-3`}
+          className={`inline-flex items-center flex-row gap-3 p-3 hover:bg-purple-500 hover:text-white transition-all bg-white w-full`}
         >
           <HiHome className={`text-xl ${!expandSidebar && "text-center text-2xl"}`} />
         </SideBarLink>
@@ -40,13 +36,13 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center gap-2 rounded-lg overflow-clip transition-all w-full ${!expandSidebar && "w-fit"}`}
       >
         <SideBarLink
-          path="/verification?currentView=overview"
+          path="/admin-dashboard/verification-overview"
           title="Overview"
           linkText={`${!expandSidebar ? "" : "Overview"}`}
-          className={`inline-flex items-center flex-row-reverse justify-center gap-3 `}
+          className={`inline-flex items-center flex-row gap-3 bg-white w-full p-3 hover:bg-purple-500 hover:text-white`}
         >
           <GoChecklist className={`${!expandSidebar && "text-2xl text-center"} text-xl`} />
         </SideBarLink>
@@ -54,13 +50,13 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center justify-center gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center justify-center gap-2 rounded-lg overflow-clip w-full ${!expandSidebar && "w-fit"}`}
       >
         <SideBarLink
           path="/verification"
           title="Dashboard"
-          linkText={`${!expandSidebar ? "" : "Unapproved Verifications"}`}
-          className={`inline-flex items-center flex-row-reverse justify-center gap-3 `}
+          linkText={`${!expandSidebar ? "" : "Approved Verifications"}`}
+          className={`inline-flex items-center flex-row justify-center gap-3  p-3 bg-white hover:bg-purple-500 hover:text-white transition-all w-full`}
         >
           <FaUserCheck className={`${!expandSidebar && "text-2xl text-center"} text-xl`} />
         </SideBarLink>
@@ -68,13 +64,13 @@ const SideBarList = () => {
       <button
         type="button"
         title="sdsds"
-        className={`flex items-center  gap-2 rounded-lg p-3 hover:bg-purple-500 hover:text-white transition-all w-full ${!expandSidebar && "w-fit"}`}
+        className={`flex items-center  gap-2 rounded-lg overflow-clip w-full ${!expandSidebar && "w-fit"}`}
       >
         <SideBarLink
           path="/verification"
           title="Dashboard"
-          linkText={`${!expandSidebar ? "" : "Approved Verifications"}`}
-          className={`inline-flex items-center flex-row-reverse gap-3 `}
+          linkText={`${!expandSidebar ? "" : "Unapproved Verifications"}`}
+          className={`inline-flex items-center flex-row gap-3 p-3  bg-white hover:bg-purple-500 hover:text-white transition-all w-full`}
         >
           <FaUserXmark className={`${!expandSidebar && "text-2xl text-center"} text-xl`} />
         </SideBarLink>

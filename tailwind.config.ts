@@ -73,6 +73,10 @@ const config = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
+    fontFamily: {
+      'poppins': ['Poppins', 'sans-serif'],
+      // poppins: ['var(--font-poppins)']
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config

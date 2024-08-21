@@ -1,9 +1,0 @@
-.container {
-    height: 100dvh;
-    display: grid;
-    gap: 0;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-}
-
-
- 
