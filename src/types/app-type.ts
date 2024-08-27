@@ -1,0 +1,38 @@
+export interface ILoginProps {
+  username: string;
+  email: string;
+  password: string;
+}
+
+// Common properties interface
+export interface IVerificationBase {
+  id: number;
+  country: string;
+  selfie_image: string;
+  government_issued_business_id_number: string;
+  government_issued_business_id_image: string;
+  location: string;
+  is_denied: boolean;
+  is_approved: boolean;
+  declination_reason: string;
+  created_at: string;
+  declined_date: string;
+}
+
+// Brand verification interface
+export interface IBrandVerificationType extends IVerificationBase {
+  full_legal_name: string;
+  phone_number: string;
+  website: string;
+  address: string;
+  brand: number;
+}
+
+// Influencer verification interface
+export interface IInfluencerVerificationType extends IVerificationBase {
+  full_name: string;
+  user: number;
+}
+
+// Types aliases
+export type RoleType = "brand" | "influencer" | string;

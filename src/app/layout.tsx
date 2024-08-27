@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
-const queryClient = new QueryClient();
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,11 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} ${poppins.variable}`}>
-        <QueryClientProvider client={queryClient}>
-          {children}
-          <Toaster richColors />
-        </QueryClientProvider>
+      <body className={`${poppins.className}`}>
+        {children}
+        <Toaster richColors position="top-center" closeButton/>
       </body>
     </html>
   );

@@ -1,15 +1,13 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-
-// Type for roles
-type RoleType = "brand" | "influencer" | string
+import { RoleType } from "@/types/app-type";
+import { isOnClientSide } from "../verification-log-view/VerificationLogsView";
 
 // Type setup for role switch
 export type RoleSwitchType = {
-  role: string;
+  role: RoleType;
   switchRole: (role: RoleType) => void;
 };
-
 
 // Context for role switching
 export const RoleSwitchContext = React.createContext<RoleSwitchType>({
@@ -24,26 +22,29 @@ export const RoleSwitchProvider = ({
   children: React.ReactNode;
 }) => {
   // Setup role state using RoleType type declaration
-  const [role, setRole] = useState<RoleType>("brand");
+  //const [role, setRole] = useState<RoleType>("brand");
+  const [role, setRole] = useState<RoleType>(() =>
+    isOnClientSide ? localStorage.getItem("role")! || "brand" : "brand"
+  );
 
   // Check if there is already a stored role in ls
   useEffect(() => {
-  // Check if there is already a stored role in ls
-    const storedRole = localStorage.getItem("role")
+    // Check if there is already a stored role in ls
+    const storedRole =
+      typeof window !== "undefined" ? localStorage.getItem("role") : null;
 
     // Make sure typeof storedRole is not null
-    if(typeof storedRole === "string") {
-      setRole(storedRole)
+    if (typeof storedRole === "string") {
+      setRole(storedRole);
     }
-
-  }, [])
+  }, []);
 
   // Role setter function
   const switchRole = (role: RoleType) => {
     // Set role to role argument passed
     setRole(role);
     // Store in local storage
-    localStorage.setItem("role", role)
+    localStorage.setItem("role", role);
   };
 
   return (
@@ -56,14 +57,15 @@ export const RoleSwitchProvider = ({
 const RoleSwitcher: React.FC = () => {
   // Use context provided by role switch provider
   const { role, switchRole } = useContext(RoleSwitchContext);
+
   return (
-    <div className="flex items-center justify-center border-2 rounded-lg w-max border-collapse overflow-clip mr-8">
+    <div className="flex items-center justify-center gap-1 border-2 border-sky-500 rounded-lg w-max overflow-clip mr-8 p-1">
       <button
         title="View for Brands"
         type="button"
         onClick={() => switchRole("brand")}
-        className={`p-3 hover:bg-gray-200 border-r ${
-          role === "brand" && "bg-gray-200"
+        className={`px-2 py-[.25rem] rounded-sm hover:bg-gray-200 ${
+          role === "brand" && "bg-sky-500 text-white"
         }`}
       >
         Brands
@@ -72,8 +74,8 @@ const RoleSwitcher: React.FC = () => {
         title="View for Influencers"
         type="button"
         onClick={() => switchRole("influencer")}
-        className={`p-3 hover:bg-gray-200 border-l ${
-          role == "influencer" && "bg-gray-200"
+        className={`px-2 py-[.25rem] rounded-sm hover:bg-gray-200 ${
+          role == "influencer" && "bg-sky-500 text-white"
         }`}
       >
         Influencers

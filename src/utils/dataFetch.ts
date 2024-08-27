@@ -1,9 +1,7 @@
+// Gey user role to make requests with
+import { ILoginProps, RoleType } from "@/types/app-type";
+
 // const accessToken: string | null = localStorage.getItem("accessToken") || null
-interface ILoginProps {
-  username: string;
-  email: string;
-  password: string;
-}
 
 // POST
 // api/auth/login
@@ -17,7 +15,7 @@ const login = async (reqBody: ILoginProps) => {
       body: JSON.stringify(reqBody),
     };
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}/login/brand/`,
+      `${process.env.NEXT_PUBLIC_AUTH_BASE_URL}login/brand/`,
       fetchOptions
     );
 
@@ -35,7 +33,10 @@ const login = async (reqBody: ILoginProps) => {
 
 // GET
 // api/admin/admin/brands-verification-details
-const getBrandsVerificationDetails = async <T>(accessToken: string): Promise<T[]> => {
+const getVerificationDetails = async <T, V>(
+  accessToken: string,
+  role: RoleType
+): Promise<T[] | V[]> => {
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -46,7 +47,7 @@ const getBrandsVerificationDetails = async <T>(accessToken: string): Promise<T[]
   // Make the call
   try {
     let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}/brand-verification-details/`,
+      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/`,
       fetchOptions
     );
 
@@ -54,13 +55,13 @@ const getBrandsVerificationDetails = async <T>(accessToken: string): Promise<T[]
       throw new Error("Something went wrong");
     }
 
-    let data: T[] = await response.json();
+    let data: T[] | V[] = await response.json();
 
     return data;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
-    return []
+    return [];
   }
 };
 
-export { login, getBrandsVerificationDetails };
+export { login, getVerificationDetails };

@@ -2,6 +2,7 @@
 import LoginForm from "@/components/form/login-form/LoginForm";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
@@ -10,6 +11,7 @@ export default function Home() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>("");
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   useEffect(() => {
     // Make sure were on the client not the server
@@ -20,15 +22,8 @@ export default function Home() {
   }, []);
 
   // Open HTML dialog element
-  function openDialog() {
-    dialogRef.current?.showModal();
-  }
 
   // Close HTML dialog element
-  function closeDialog() {
-    dialogRef.current?.close();
-  }
-
   return (
     <main className="flex items-center justify-center gap-5 flex-col h-dvh">
       <Image
@@ -45,43 +40,46 @@ export default function Home() {
         </p>
       </div>
       <div className="inline">
-        {/* <Link href="/verification" className="btn rounded-xl p-4 bg-sky-700 text-white">Go to verification dashboard</Link> */}
-        <button
-          className="btn bg-sky-500 p-4 rounded-lg text-white tracking-wider font-semibold font-poppins"
-          type="button"
-          title="Go to admin verifications dashboard"
-          onClick={() => {
-            if (accessToken && typeof accessToken !== null) {
-              router.push("/admin-dashboard");
-            }
+        {accessToken && accessToken !== null ? (
+          <button
+            className="btn bg-sky-500 p-4 rounded-lg text-white tracking-wider font-semibold font-poppins"
+            type="button"
+            title="Go to admin verifications dashboard"
+            onClick={() => {
+              if (accessToken && typeof accessToken !== null) {
+                router.push("/admin-dashboard");
+              }
 
-            openDialog();
-          }}
-        >
-          Go to verification dashboard
-        </button>
+              setOpenDialog(true);
+            }}
+          >
+            Go to verification dashboard
+          </button>
+        ) : (
+          <Link href="/login" className="capitalize bg-sky-500 text-white p-3 rounded-lg mt-3">Login as admin</Link>
+        )}
       </div>
-      <dialog ref={dialogRef} className="p-4 w-4/12 overflow-clip rounded-lg">
-       <div className="flex items-end justify-end">
-       <Button
-          type="button"
-          onClick={closeDialog}
-          title="Close Dialog"
-          className="font-light bg-gray-500 text-white hover:bg-black mb-3 rounded-full"
-        >
-          <IoClose className="text-2xl" />
-        </Button>
-       </div>
+      {/* <dialog ref={dialogRef} className="p-4 w-4/12 overflow-clip rounded-lg">
+        <div className="flex items-end justify-end">
+          <Button
+            type="button"
+            onClick={closeDialog}
+            title="Close Dialog"
+            className="font-light bg-gray-500 text-white hover:bg-black mb-3 rounded-full"
+          >
+            <IoClose className="text-2xl" />
+          </Button>
+        </div>
         <div className="my-2 flex flex-col gap-2 items-center">
           <h2 className="text-2xl font-bold tracking-wider">
             Superate Authorization
           </h2>
           <p className="text-sm font-medium tracking-wide text-center text-neutral-500">
-            Let's verify that you're an admin.
+            Let&apos;s verify that you&apos;re an admin.
           </p>
         </div>
         <LoginForm />
-      </dialog>
+      </dialog> */}
     </main>
   );
 }

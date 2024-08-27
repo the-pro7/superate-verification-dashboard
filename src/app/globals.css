@@ -69,3 +69,13 @@
   }
 } */
 
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    scrollbar-width: 10px;
+    scrollbar-color: #dad8d8;
+  }
+  
+
+}
+
