@@ -64,4 +64,35 @@ const getVerificationDetails = async <T, V>(
   }
 };
 
-export { login, getVerificationDetails };
+const approveUser = async (
+  accessToken: string,
+  role: string,
+  id: string | number
+) => {
+  const fetchOptions = {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({ is_approved: true }),
+  };
+
+  try {
+    let response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}`,
+      fetchOptions
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch");
+    }
+
+    let data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export { login, getVerificationDetails, approveUser };

@@ -62,6 +62,12 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
     return (item as IBrandVerificationType).full_legal_name !== undefined;
   }
 
+  const filteredData: (IBrandVerificationType | IInfluencerVerificationType)[] =
+    data.filter(
+      (item: IBrandVerificationType | IInfluencerVerificationType) =>
+        item.is_approved === false
+    );
+
   /*
       // Usage in map function
       data.map((item: IBrandVerificationType | IInfluencerVerificationType) => (
@@ -76,8 +82,8 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
 
   return (
     <div className="h-[65%] my-3 py-3 overflow-y-scroll custom-scrollbar">
-      {data && data?.length != 0 ? (
-        data.map(
+      {filteredData && filteredData?.length != 0 ? (
+        filteredData.map(
           (item: IBrandVerificationType | IInfluencerVerificationType) => (
             <VerificationLog
               key={item.id}
@@ -97,7 +103,6 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
       ) : (
         <h1>No {role} verifications to view</h1>
       )}
-      {console.log(test)}
       {test && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />}
     </div>
   );
