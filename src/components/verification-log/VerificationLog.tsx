@@ -1,14 +1,17 @@
 "use client";
 import Image from "next/image";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 // Icon imports
 import { LuEye } from "react-icons/lu";
-import { FaCheck } from "react-icons/fa6";
+import { FaCaretUp, FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import IconButton from "../icon-button/IconButton";
 import Link from "next/link";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
+import DeclinationReasonForm from "../decline-reason-form/DeclinationReasonForm";
+import { isOnClientSide } from "../verification-log-view/VerificationLogsView";
+import { approveUser } from "@/utils/dataFetch";
 
 type IVerificationLogType = {
   id?: number;
@@ -28,6 +31,15 @@ const VerificationLog = ({
   setterFn,
   value,
 }: IVerificationLogType) => {
+  const role: string | null = isOnClientSide
+    ? localStorage.getItem("role")
+    : null;
+  const accessToken = isOnClientSide
+    ? localStorage.getItem("accessToken")
+    : null;
+  const [hasDeclined, setHasDeclined] = useState<boolean>(false);
+
+  // JSX
   return (
     <div className="flex items-center justify-between px-4 rounded-lg shadow-xl py-2 bg-white w-[95%] mx-auto mt-5 transition-all hover:-translate-y-2">
       <div className="flex gap-3 items-center">
@@ -41,7 +53,7 @@ const VerificationLog = ({
       </div>
       <div className="flex gap-2">
         {/* Optionally rendered */}
-        <Link href={`verification-overview/${id!}`}>
+        <Link href={`verification-overview/${role}/${id!}`}>
           <IconButton
             color="text-sky-800 bg-sky-300"
             title={`View ${fullLegalName}`}
@@ -73,7 +85,10 @@ const VerificationLog = ({
                     Confirm approval of &apos;{fullLegalName}&apos;
                   </h1>
                   <div className="flex gap-2 items-center justify-center">
-                    <Button className="px-5 bg-green-500 hover:bg-neutral-300">
+                    <Button
+                      className="px-5 bg-green-500 hover:bg-neutral-300"
+                      onClick={() => approveUser(accessToken!, role!, id!)}
+                    >
                       Confirm
                     </Button>
                     <Button
@@ -100,6 +115,7 @@ const VerificationLog = ({
           color="text-red-800 bg-red-300"
           onClick={() => {
             setterFn(true);
+            setHasDeclined(false);
 
             toast.custom(
               (t) => (
@@ -118,7 +134,30 @@ const VerificationLog = ({
                     Confirm disapproval of &apos;{fullLegalName}&apos;
                   </h1>
                   <div className="flex gap-2 items-center justify-center">
-                    <Button className="px-5 bg-red-400 hover:bg-neutral-300">
+                    <Button
+                      className="px-5 bg-red-400 hover:bg-neutral-300 text-center"
+                      onClick={() => {
+                        toast.dismiss(t);
+                        toast.custom(
+                          (id) => (
+                            <div className="relative bg-white rounded-lg shadow-lg p-4">
+                              <button
+                                onClick={() => {
+                                  toast.dismiss(id);
+                                  setterFn(false);
+                                }}
+                                title="Close popup"
+                                className="absolute right-0 top-0 w-fit h-fit rounded-full border-2 m-1"
+                              >
+                                <RxCross2 />
+                              </button>
+                              <DeclinationReasonForm />
+                            </div>
+                          ),
+                          { duration: Infinity }
+                        );
+                      }}
+                    >
                       Confirm
                     </Button>
                     <Button
@@ -131,6 +170,7 @@ const VerificationLog = ({
                       Cancel
                     </Button>
                   </div>
+                  {hasDeclined ? <DeclinationReasonForm /> : null}
                 </div>
               ),
               { onDismiss: () => setterFn(false), duration: Infinity }

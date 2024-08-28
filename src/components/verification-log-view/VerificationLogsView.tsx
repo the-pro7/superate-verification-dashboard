@@ -63,7 +63,7 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
   }
 
   const filteredData: (IBrandVerificationType | IInfluencerVerificationType)[] =
-    data.filter(
+    data?.filter(
       (item: IBrandVerificationType | IInfluencerVerificationType) =>
         item.is_approved === false
     );
@@ -103,6 +103,13 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
       ) : (
         <h1>No {role} verifications to view</h1>
       )}
+      <VerificationLog
+        fullLegalName="Emma"
+        location="Tuobodom"
+        selfieImage="/logo.png"
+        setterFn={setTest}
+        value={test}
+      />
       {test && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />}
     </div>
   );
