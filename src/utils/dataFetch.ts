@@ -1,3 +1,4 @@
+"use server"
 // Gey user role to make requests with
 import { ILoginProps, RoleType } from "@/types/app-type";
 
@@ -67,7 +68,7 @@ const getVerificationDetails = async <T, V>(
 const approveUser = async (
   accessToken: string,
   role: string,
-  id: string | number
+  id: string
 ) => {
   const fetchOptions = {
     method: "PATCH",
@@ -98,7 +99,7 @@ const approveUser = async (
 const disapproveUser = async (
   accessToken: string,
   role: string,
-  id: string | number,
+  id: string,
   declination_reason: string
 ) => {
   const fetchOptions = {
@@ -107,7 +108,7 @@ const disapproveUser = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ is_denied: true }),
+    body: JSON.stringify({ is_denied: true, declination_reason }),
   };
 
   try {

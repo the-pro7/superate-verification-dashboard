@@ -14,7 +14,7 @@ import { isOnClientSide } from "../verification-log-view/VerificationLogsView";
 import { approveUser } from "@/utils/dataFetch";
 
 type IVerificationLogType = {
-  id?: number;
+  id?: string;
   selfieImage: string;
   fullLegalName: string;
   location: string;
@@ -22,7 +22,7 @@ type IVerificationLogType = {
   value?: boolean;
 };
 
-// This UI component displays the synopsis details of brands/influencers
+// This UI component displays the synopsis details of brands/influencer
 const VerificationLog = ({
   selfieImage,
   fullLegalName,
@@ -37,6 +37,7 @@ const VerificationLog = ({
   const accessToken = isOnClientSide
     ? localStorage.getItem("accessToken")
     : null;
+    // State for declination
   const [hasDeclined, setHasDeclined] = useState<boolean>(false);
 
   // JSX
@@ -59,7 +60,7 @@ const VerificationLog = ({
             title={`View ${fullLegalName}`}
             buttonText="View"
             icon={<LuEye className="text-2xl text-sky-800" />}
-          />
+        />
         </Link>
         {/* This button when clicked, should send a patch request to approve user */}
         <IconButton
@@ -87,7 +88,7 @@ const VerificationLog = ({
                   <div className="flex gap-2 items-center justify-center">
                     <Button
                       className="px-5 bg-green-500 hover:bg-neutral-300"
-                      onClick={() => approveUser(accessToken!, role!, id!)}
+                      onClick={async () => await approveUser(accessToken!, role!, id!)}
                     >
                       Confirm
                     </Button>
