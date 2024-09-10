@@ -40,7 +40,9 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
       toast.success(`Approved ${role} successfully`);
     },
     onError: () => {
+      // Close the dialog
       setIsOpen(false);
+      // SHow error message for failed disapproval
       toast.error(`Failed to approve ${role}, try again`);
     },
   });

@@ -45,7 +45,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
     | (IBrandVerificationType | IInfluencerVerificationType)[]
     | undefined = data?.filter(
     (item: IBrandVerificationType | IInfluencerVerificationType) =>
-      item.is_approved === false
+      item.is_approved === false && item.is_denied === false
   );
 
 

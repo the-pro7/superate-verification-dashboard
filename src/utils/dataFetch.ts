@@ -59,11 +59,12 @@ const getVerificationDetails = async <T, V>(
 
     return data;
   } catch (error: any) {
-    console.log(error);
+    console.log(`This caused the error ${error.cause}`);
     return [];
   }
 };
 
+// Approve User
 const approveUser = async (accessToken: string, role: string, id: string) => {
   // Construct the request body
   const body = JSON.stringify({ is_approved: true });
@@ -104,6 +105,7 @@ const approveUser = async (accessToken: string, role: string, id: string) => {
   }
 };
 
+// Disapprove User
 const disapproveUser = async (
   accessToken: string,
   role: string,
