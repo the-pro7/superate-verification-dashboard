@@ -36,7 +36,7 @@ const SingleInfluencerVerificationPage = ({
       {/* Back button */}
       <BackButton />
       <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-around items-center pt-10">
-        <GovImage />
+        <GovImage imgSrc={data?.government_issued_business_id_image!}/>
         <UserDetails id={id as string} role="influencer" adminAccessToken={accessToken!} data={data!}/>
       </div>
     </div>
