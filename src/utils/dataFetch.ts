@@ -1,6 +1,11 @@
 "use server";
 // Gey user role to make requests with
-import { ILoginProps, RoleType } from "@/types/app-type";
+import {
+  IBrandVerificationType,
+  IInfluencerVerificationType,
+  ILoginProps,
+  RoleType,
+} from "@/types/app-type";
 import { revalidatePath } from "next/cache";
 
 // POST
@@ -146,7 +151,6 @@ const getSingleVerificationDetail = async (
 ) => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`;
 
-  console.log(`apiUrl : ${apiUrl}`);
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -158,8 +162,10 @@ const getSingleVerificationDetail = async (
   try {
     const response = await fetch(apiUrl, fetchOptions);
 
-    let data = await response.json();
+    let data: IBrandVerificationType | IInfluencerVerificationType =
+      await response.json();
     console.log(data);
+    return data;
   } catch (error) {
     console.log(error);
   }

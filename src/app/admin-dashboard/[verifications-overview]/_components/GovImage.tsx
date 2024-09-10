@@ -1,10 +1,10 @@
 import Image from "next/image";
 
-const GovImage = () => {
+const GovImage = ({imgSrc}: {imgSrc: string}) => {
   return (
     <div className="w-1/2 aspect-square rounded-md overflow-clip relative shadow-lg grid">
       <Image
-        src="/gov.png"
+        src={imgSrc}
         alt="Government ID"
         fill
         className="rounded-lg object-cover shadow-lg col-span-1 row-span-1"

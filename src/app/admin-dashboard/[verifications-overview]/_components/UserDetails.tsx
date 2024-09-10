@@ -8,14 +8,30 @@ import { DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import ApproveActionButton from "@/components/verification-log-view/_components/ApproveActionButton";
 import DisapproveActionButton from "@/components/verification-log-view/_components/DisapproveActionButton";
+import {
+  IBrandVerificationType,
+  IInfluencerVerificationType,
+} from "@/types/app-type";
 
 interface UserDetailsProps {
   id: string;
   role: "brand" | "influencer";
   adminAccessToken: string;
+  data: IBrandVerificationType | IInfluencerVerificationType;
 }
 
-const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
+const UserDetails = ({
+  id,
+  role,
+  adminAccessToken,
+  data,
+}: UserDetailsProps) => {
+  // console.log(data.full_legal_name)
+  function isBrandVerification(
+    item: IBrandVerificationType | IInfluencerVerificationType
+  ): item is IBrandVerificationType {
+    return (item as IBrandVerificationType).full_legal_name !== undefined;
+  }
   return (
     <div className="border-2 border-slate-100 bg-slate-100 p-7 rounded-lg">
       {/* User (Brand/Influencer) */}
@@ -30,7 +46,7 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
               dialogTrigger={
                 <DialogTrigger asChild>
                   <Image
-                    src="/selfie2.jpeg"
+                    src={data.selfie_image}
                     fill
                     alt="Brand Selfie Image"
                     className="object-cover"
@@ -39,15 +55,17 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
               }
               title={`Selfie Image for ${role} ${id}`}
               description="Showing full selfie image"
-              imgSrc="/selfie2.jpeg"
+              imgSrc={data.selfie_image}
               altText="hello"
             />
           </div>
           <div className="flex flex-col">
             <h1 className="text-3xl md:font-5xl lg:font-7xl font-semibold mb-2">
-              John Doe {id}{" "}
+              {isBrandVerification(data)
+                ? data.full_legal_name
+                : data.full_name}
             </h1>
-            <p className="text-gray-500">Tema, Ghana</p>
+            <p className="text-gray-500">{data.country || data.location}</p>
           </div>
         </div>
         <span className="inline-block bg-yellow-400 text-black ml-3 py-1 px-2 rounded mb-5 capitalize">
@@ -56,28 +74,51 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
       </div>
 
       {/* Details */}
+      {role === "influencer" ? (
+        <div className="flex gap-3 flex-col">
+          <div className="text-gray-700 mb-2">
+            <strong>Joined:</strong> 1st August, 2024
+          </div>
+          <div className="text-gray-700 mb-2">
+            <strong>Government ID Number:</strong> {data.government_issued_business_id_number || 'None'}
+          </div>
+          <div className="text-gray-700 mb-10">
+            <strong>Country:</strong> {data.country}
+          </div>
+        </div>
+      ) : (
+        // For brand
       <div className="flex gap-3 flex-col">
         <div className="text-gray-700 mb-2">
           <strong>Joined:</strong> 1st August, 2024
         </div>
         <div className="text-gray-700 mb-2">
-          <strong>Phone:</strong> 0559911770
+          <strong>Phone:</strong> {isBrandVerification(data) && data.phone_number}
         </div>
         <div className="text-gray-700 mb-2">
+          <strong>Government ID Number:</strong> {isBrandVerification(data) && data.government_issued_business_id_number}
+        </div>
+        <div className="text-gray-700">
           <strong>Website:</strong>{" "}
-          <Link
-            href="http://www.example.com"
+          {isBrandVerification(data) && data.website !== '' ? <a
+            href={data.website}
             target="_blank"
+            type="link"
             // rel="noopener noreferrer"
             className="text-blue-600 hover:underline"
           >
-            www.example.com
-          </Link>
+            {data.website}
+          </a> : 'None'}
         </div>
-        <div className="text-gray-700 mb-10">
-          <strong>Address:</strong> VQ-20 Crimson Road
+        <div className="text-gray-700 mb-1">
+          <strong>Address:</strong> {isBrandVerification(data) && data.address || 'None'}
         </div>
+        <div className="text-gray-700 mb-3">
+          <strong>Location:</strong> {isBrandVerification(data) && data.location || 'None'}
+        </div>
+
       </div>
+)}
 
       {/* Buttons */}
       <div className="flex flex-col ">

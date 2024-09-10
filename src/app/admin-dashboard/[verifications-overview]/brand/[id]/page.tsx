@@ -22,8 +22,15 @@ const SingleBrandVerificationPage = ({
   const { data, error, isLoading } = useQuery({
     queryKey: ["brand-verification"],
     queryFn: () =>
-      getSingleVerificationDetail(accessToken!, role!, id as string),
+      getSingleVerificationDetail(
+        accessToken as string,
+        role as string,
+        id as string
+      ),
   });
+
+  console.log(data);
+  console.log(`The error is : ${error}`)
 
   if (isLoading) {
     return <h1>Loading</h1>;
@@ -34,8 +41,13 @@ const SingleBrandVerificationPage = ({
       {/* Back button */}
       <BackButton />
       <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-around items-center pt-10">
-        <GovImage />
-        <UserDetails id={id as string} role="brand" adminAccessToken={accessToken!}/>
+        <GovImage imgSrc={data?.government_issued_business_id_image!}/>
+        <UserDetails
+          id={id as string}
+          role="brand"
+          adminAccessToken={accessToken!}
+          data={data!}
+        />
       </div>
     </div>
   );

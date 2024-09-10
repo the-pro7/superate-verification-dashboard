@@ -30,19 +30,19 @@ export interface IVerificationBase {
 }
 
 // Brand verification interface
-export interface IBrandVerificationType extends IVerificationBase {
+export type IBrandVerificationType = {
   full_legal_name: string;
   phone_number: string;
   website: string;
   address: string;
   brand: number;
-}
+} & IVerificationBase;
 
 // Influencer verification interface
-export interface IInfluencerVerificationType extends IVerificationBase {
+export type IInfluencerVerificationType = {
   full_name: string;
   user: number;
-}
+} & IVerificationBase;
 
 // Types aliases
 export type RoleType = "brand" | "influencer" | string;
