@@ -36,7 +36,7 @@ const ExpandSidebarButton = () => {
   return (
     <button
       type="button"
-      className="bg-white w-6 h-6 lg:flex items-center justify-center rounded-full shadow-lg cursor-pointer -right-3 top-10 lg:absolute z-50 md:hidden"
+      className="hidden md:block bg-white w-6 h-6 lg:flex items-center justify-center rounded-full shadow-lg cursor-pointer -right-3 top-10 lg:absolute z-50 md:hidden"
       onClick={toggleSidebarExpansion}
       title="Expand sidebar"
     >

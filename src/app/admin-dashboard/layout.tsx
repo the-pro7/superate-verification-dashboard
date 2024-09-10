@@ -28,7 +28,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <SidebarProvider>
             <RoleSwitchProvider>
               <Sidebar />
-              <main className="w-full px-8">{children}</main>
+              <main className="w-full h-full px-8">{children}</main>
             </RoleSwitchProvider>
         </SidebarProvider>
         <ReactQueryDevtools />

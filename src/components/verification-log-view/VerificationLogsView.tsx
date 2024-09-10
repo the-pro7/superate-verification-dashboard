@@ -15,8 +15,6 @@ export const isOnClientSide: boolean = typeof window !== "undefined";
 
 const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
   const { role } = useContext(RoleSwitchContext);
-  const [test, setTest] = useState<boolean>(false);
-  const dialogRef = useRef<HTMLDialogElement>(null);
   // Role state
   const accessToken: string | null = isOnClientSide
     ? localStorage.getItem("accessToken")
@@ -62,11 +60,12 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
     return (item as IBrandVerificationType).full_legal_name !== undefined;
   }
 
-  const filteredData: (IBrandVerificationType | IInfluencerVerificationType)[] =
-    data?.filter(
-      (item: IBrandVerificationType | IInfluencerVerificationType) =>
-        item.is_approved === false
-    );
+  const filteredData:
+    | (IBrandVerificationType | IInfluencerVerificationType)[]
+    | undefined = data?.filter(
+    (item: IBrandVerificationType | IInfluencerVerificationType) =>
+      item.is_approved === false
+  );
 
   /*
       // Usage in map function
@@ -87,7 +86,7 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
           (item: IBrandVerificationType | IInfluencerVerificationType) => (
             <VerificationLog
               key={item.id}
-              id={item.id}
+              id={String(item.id)}
               fullLegalName={
                 isBrandVerification(item)
                   ? item.full_legal_name
@@ -95,8 +94,6 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
               }
               selfieImage={item.selfie_image}
               location={item.location ?? item.country}
-              setterFn={setTest}
-              value={test}
             />
           )
         )
@@ -107,10 +104,7 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
         fullLegalName="Emma"
         location="Tuobodom"
         selfieImage="/logo.png"
-        setterFn={setTest}
-        value={test}
       />
-      {test && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" />}
     </div>
   );
 };

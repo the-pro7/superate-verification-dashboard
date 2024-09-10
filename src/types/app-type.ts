@@ -1,7 +1,17 @@
+import { ReactNode } from "react";
+
 export interface ILoginProps {
   username: string;
   email: string;
   password: string;
+}
+
+export interface ILoginDataProps {
+  access: string;
+  refresh: string;
+  user: {
+    email: string;
+  };
 }
 
 // Common properties interface
@@ -36,3 +46,13 @@ export interface IInfluencerVerificationType extends IVerificationBase {
 
 // Types aliases
 export type RoleType = "brand" | "influencer" | string;
+
+// Actions
+export interface IActionButtonProps {
+  roleId: string;
+  title: string;
+  description: string;
+  dialogTrigger: ReactNode;
+  accessToken: string;
+  role: string;
+}

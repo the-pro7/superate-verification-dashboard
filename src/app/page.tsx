@@ -8,10 +8,8 @@ import { useRef, useEffect, useState } from "react";
 import { IoClose } from "react-icons/io5";
 
 export default function Home() {
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>("");
-  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   useEffect(() => {
     // Make sure were on the client not the server
@@ -49,14 +47,17 @@ export default function Home() {
               if (accessToken && typeof accessToken !== null) {
                 router.push("/admin-dashboard");
               }
-
-              setOpenDialog(true);
             }}
           >
             Go to verification dashboard
           </button>
         ) : (
-          <Link href="/login" className="capitalize bg-sky-500 text-white p-3 rounded-lg mt-3">Login as admin</Link>
+          <Link
+            href="/login"
+            className="capitalize bg-sky-500 text-white p-3 rounded-lg mt-3"
+          >
+            Login as admin
+          </Link>
         )}
       </div>
       {/* <dialog ref={dialogRef} className="p-4 w-4/12 overflow-clip rounded-lg">

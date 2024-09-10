@@ -1,8 +1,8 @@
-"use server"
+"use server";
 // Gey user role to make requests with
 import { ILoginProps, RoleType } from "@/types/app-type";
+import { revalidatePath } from "next/cache";
 
-// const accessToken: string | null = localStorage.getItem("accessToken") || null
 
 // POST
 // api/auth/login
@@ -65,35 +65,45 @@ const getVerificationDetails = async <T, V>(
   }
 };
 
-const approveUser = async (
-  accessToken: string,
-  role: string,
-  id: string
-) => {
+const approveUser = async (accessToken: string, role: string, id: string) => {
+  // Construct the request body
+  const body = JSON.stringify({ full_legal_name: 'Kyle Cook' });
+
+  // Set up fetch options
   const fetchOptions = {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ is_approved: true }),
+    body: body,
   };
 
-  try {
-    let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}`,
-      fetchOptions
-    );
+  // Construct the API URL
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`;
 
+  try {
+    // Make the request
+    const response = await fetch(apiUrl, fetchOptions);
+
+    // Check if the response is okay
     if (!response.ok) {
-      throw new Error("Failed to fetch");
+      // Log the full response object for debugging
+      console.log(`Response Error: ${response.statusText}`);
+      const errorData = await response.json();
+      console.log('Error Details:', errorData);
     }
 
-    let data = await response.json();
+    // Parse and return the response data
+    const data = await response.json();
+    console.log(`Data: ${data.full_legal_name}`)
     return data;
   } catch (error) {
-    throw error;
+    // Handle and log any errors
+    console.error('Request failed:', error);
   }
+
+  revalidatePath('/admin-dashboard/verification-overview')
 };
 
 const disapproveUser = async (
@@ -113,7 +123,7 @@ const disapproveUser = async (
 
   try {
     let response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}`,
+      `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`,
       fetchOptions
     );
 
@@ -122,9 +132,32 @@ const disapproveUser = async (
     }
 
     let data = await response.json();
+    console.log(`Data ${data.declination_reason}`)
     return data;
   } catch (error) {
     throw error;
   }
 };
-export { login, getVerificationDetails, approveUser };
+
+const getSingleVerificationDetail = async (accessToken: string, role: string, id: string) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`;
+
+  console.log(`apiUrl : ${apiUrl}`)
+  const fetchOptions = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  try {
+    const response = await fetch(apiUrl, fetchOptions)
+
+    let data = await response.json()
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+}
+export { login, getVerificationDetails, approveUser, disapproveUser, getSingleVerificationDetail };

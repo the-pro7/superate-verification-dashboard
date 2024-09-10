@@ -15,9 +15,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/utils/dataFetch";
-import { useState } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
+import { ILoginDataProps } from "@/types/app-type";
 
 const formSchema = z.object({
   username: z.string().min(8, {
@@ -31,39 +31,10 @@ const formSchema = z.object({
   }),
 });
 
-type UserForm = z.infer<typeof formSchema>
+type UserForm = z.infer<typeof formSchema>;
 
 export default function LoginForm() {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null | unknown>("");
-
-  const router = useRouter()
-
-  async function onSubmit(values: UserForm) {
-   if(navigator.onLine) {
-    try {
-      setLoading(true);
-      const { access, refresh, user } = await login(values);
-
-      console.log(user?.email);
-
-      if (access && refresh && user) {
-        localStorage.setItem("accessToken", access);
-        localStorage.setItem("refreshToken", refresh);
-        router.push("/admin-dashboard")
-      }
-    } catch (error) {
-      setLoading(false);
-      console.error(error);
-      setError(error)
-    } finally {
-      setLoading(false);
-      setError("")
-    } 
-   } else {
-    alert("You're not online, connect to a network")
-   }
-  }
+  const router = useRouter();
 
   const form = useForm<UserForm>({
     resolver: zodResolver(formSchema),
@@ -74,9 +45,49 @@ export default function LoginForm() {
     },
   });
 
+  // Destructure goodies from form declaration
+  const {
+    formState: { isSubmitting, errors },
+    setError,
+    handleSubmit,
+  } = form;
+
+  async function onSubmit(values: UserForm) {
+    if (navigator.onLine) {
+      try {
+        const data: ILoginDataProps = await login(values);
+
+        console.log(data);
+
+        if (!data) {
+          setError("root", {
+            message: "Failed to login, Check your network and try again.",
+          });
+
+          return false;
+        }
+
+        if (data.access && data.refresh && data.user) {
+          localStorage.setItem("accessToken", data.access);
+          localStorage.setItem("refreshToken", data.refresh);
+          router.push("/admin-dashboard");
+        }
+      } catch (error: any) {
+        console.error(`This is the error: ${error}`);
+      }
+    } else {
+      setError("root", {
+        message: "You're not online, connect to a network",
+      });
+    }
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-4/5 mx-auto">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="space-y-8 w-4/5 mx-auto"
+      >
         <FormField
           control={form.control}
           name="username"
@@ -84,7 +95,12 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder="Enter username" {...field} type="text" autoFocus />
+                <Input
+                  placeholder="Enter username"
+                  {...field}
+                  type="text"
+                  autoFocus
+                />
               </FormControl>
               {/* <FormDescription>
                 This is your public display username.
@@ -123,8 +139,12 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading} className="inline-flex items-center font-medium gap-1 px-4 tracking-widest">
-          {loading && (
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center font-medium gap-1 px-4 tracking-widest"
+        >
+          {isSubmitting && (
             <RotatingLines
               visible={true}
               height="20"
@@ -137,8 +157,13 @@ export default function LoginForm() {
               wrapperClass=""
             />
           )}
-          {loading ? "Logging in..." : "Login"}
+          {isSubmitting ? "Logging in..." : "Login"}
         </Button>
+        {errors.root && (
+          <div className="text-red-500 tracking-wide">
+            {errors.root.message}
+          </div>
+        )}
       </form>
     </Form>
   );
