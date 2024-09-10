@@ -13,7 +13,7 @@ import VerificationLog from "../verification-log/VerificationLog";
 // Check if user is on client
 export const isOnClientSide: boolean = typeof window !== "undefined";
 
-const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
+const VerificationLogsView = ({ query }: { query?: string }) => {
   const { role } = useContext(RoleSwitchContext);
   // Role state
   const accessToken: string | null = isOnClientSide
@@ -30,28 +30,9 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
     return (
       <h1 className="inline-flex items-center gap-2 text-2xl">
         {" "}
-        {/* <RotatingLines
-          visible={true}
-          height="20"
-          width="20"
-          color="white"
-          strokeWidth="2"
-          animationDuration="0.75"
-          ariaLabel="rotating-lines-loading"
-          // wrapperStyle={{}}
-          wrapperClass=""
-        /> */}
         Loading verification data...
       </h1>
     );
-
-  if (error) {
-    return (
-      <h1>
-        An error occurred <code>{error.message}</code>
-      </h1>
-    );
-  }
 
   // Type guard to check if the item is of type IBrandVerificationType
   function isBrandVerification(
@@ -67,17 +48,6 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
       item.is_approved === false
   );
 
-  /*
-      // Usage in map function
-      data.map((item: IBrandVerificationType | IInfluencerVerificationType) => (
-  <VerificationLog
-    key={item.id}
-    fullLegalName={isBrandVerification(item) ? item.full_legal_name : item.full_name}
-    selfieImage={item.selfie_image}
-    location={item.location}
-  />
-))
- */
 
   return (
     <div className="h-[65%] my-3 py-3 overflow-y-scroll custom-scrollbar">
@@ -109,4 +79,4 @@ const BrandsVerificationLogsView = ({ query }: { query?: string }) => {
   );
 };
 
-export default BrandsVerificationLogsView;
+export default VerificationLogsView;

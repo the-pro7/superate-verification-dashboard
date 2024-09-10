@@ -3,7 +3,6 @@
 import { ILoginProps, RoleType } from "@/types/app-type";
 import { revalidatePath } from "next/cache";
 
-
 // POST
 // api/auth/login
 const login = async (reqBody: ILoginProps) => {
@@ -67,7 +66,7 @@ const getVerificationDetails = async <T, V>(
 
 const approveUser = async (accessToken: string, role: string, id: string) => {
   // Construct the request body
-  const body = JSON.stringify({ full_legal_name: 'Kyle Cook' });
+  const body = JSON.stringify({ is_approved: true });
 
   // Set up fetch options
   const fetchOptions = {
@@ -85,25 +84,24 @@ const approveUser = async (accessToken: string, role: string, id: string) => {
   try {
     // Make the request
     const response = await fetch(apiUrl, fetchOptions);
-
     // Check if the response is okay
     if (!response.ok) {
       // Log the full response object for debugging
       console.log(`Response Error: ${response.statusText}`);
       const errorData = await response.json();
-      console.log('Error Details:', errorData);
+      console.log("Error Details:", errorData);
     }
 
     // Parse and return the response data
     const data = await response.json();
-    console.log(`Data: ${data.full_legal_name}`)
-    return data;
+    console.log(`Data: ${data.is_approved}`);
+    // refetch data on path
+    revalidatePath("/admin-dashboard/verification-overview");
+    // return data;
   } catch (error) {
     // Handle and log any errors
-    console.error('Request failed:', error);
+    console.error("Request failed:", error);
   }
-
-  revalidatePath('/admin-dashboard/verification-overview')
 };
 
 const disapproveUser = async (
@@ -132,17 +130,21 @@ const disapproveUser = async (
     }
 
     let data = await response.json();
-    console.log(`Data ${data.declination_reason}`)
+    console.log(`Data ${data.declination_reason}`);
     return data;
   } catch (error) {
     throw error;
   }
 };
 
-const getSingleVerificationDetail = async (accessToken: string, role: string, id: string) => {
+const getSingleVerificationDetail = async (
+  accessToken: string,
+  role: string,
+  id: string
+) => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`;
 
-  console.log(`apiUrl : ${apiUrl}`)
+  console.log(`apiUrl : ${apiUrl}`);
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -152,12 +154,18 @@ const getSingleVerificationDetail = async (accessToken: string, role: string, id
   };
 
   try {
-    const response = await fetch(apiUrl, fetchOptions)
+    const response = await fetch(apiUrl, fetchOptions);
 
-    let data = await response.json()
-    console.log(data)
+    let data = await response.json();
+    console.log(data);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-export { login, getVerificationDetails, approveUser, disapproveUser, getSingleVerificationDetail };
+};
+export {
+  login,
+  getVerificationDetails,
+  approveUser,
+  disapproveUser,
+  getSingleVerificationDetail,
+};

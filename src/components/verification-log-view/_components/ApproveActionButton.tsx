@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import { DialogClose } from "@radix-ui/react-dialog";
 import { toast } from "sonner";
 import { approveUser } from "@/utils/dataFetch";
 import { IActionButtonProps } from "@/types/app-type";
-
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 const ApproveActionButton: React.FC<IActionButtonProps> = ({
   title,
   description,
@@ -22,8 +22,36 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
   accessToken,
   role,
 }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  // Initiate new query client
+  const queryClient = useQueryClient();
+
+  // Query mutation to handle approval of user
+  const mutation = useMutation({
+    mutationFn: () => approveUser(accessToken, role, roleId),
+    onSuccess: () => {
+      // Invalidate query to refetch in the bg
+      queryClient.invalidateQueries({
+        queryKey: [role, "verification-details"],
+      });
+
+      // Show success toast message
+      toast.success(`Approved ${role} successfully`);
+    },
+    onError: () => {
+      setIsOpen(false);
+      toast.error(`Failed to approve ${role}, try again`);
+    },
+  });
+
+  // Function to handle userApproval
+  async function handleApproval() {
+    mutation.mutate();
+  }
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {dialogTrigger}
       <DialogContent>
         <DialogHeader>
@@ -33,9 +61,10 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
         <DialogFooter className="sm:justify-start">
           <Button
             type="button"
-            onClick={async () => approveUser(accessToken, role, roleId)}
+            disabled={mutation.isPending}
+            onClick={handleApproval}
           >
-            Yes, Confirm
+            {mutation.isPending ? "Approving..." : "Yes, Confirm"}
           </Button>
           <DialogClose asChild>
             <Button type="button" variant="secondary">
