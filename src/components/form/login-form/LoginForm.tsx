@@ -69,8 +69,8 @@ export default function LoginForm() {
         }
 
         if (data.access && data.refresh && data.user) {
-          localStorage.setItem("accessToken", data.access);
-          localStorage.setItem("refreshToken", data.refresh);
+          sessionStorage.setItem("accessToken", data.access);
+          sessionStorage.setItem("refreshToken", data.refresh);
           router.push("/admin-dashboard");
           toast.success('Signed in successfully!')
         }

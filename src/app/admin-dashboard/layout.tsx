@@ -13,7 +13,7 @@ export const queryClient = new QueryClient();
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const accessToken = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   // Protect route if user is not authenticated

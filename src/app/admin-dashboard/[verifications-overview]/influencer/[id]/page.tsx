@@ -14,10 +14,10 @@ const SingleInfluencerVerificationPage = ({
   params: { id: string | number };
 }) => {
   const role: string | null = isOnClientSide
-    ? localStorage.getItem("role")
+    ? sessionStorage.getItem("role")
     : null;
   const accessToken = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   const { data, error, isLoading } = useQuery({

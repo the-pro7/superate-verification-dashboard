@@ -15,7 +15,7 @@ export default function Home() {
     // Make sure were on the client not the server
     if (typeof window != "undefined") {
       // Then access token
-      setAccessToken(localStorage.getItem("accessToken"));
+      setAccessToken(sessionStorage.getItem("accessToken"));
     }
   }, []);
 

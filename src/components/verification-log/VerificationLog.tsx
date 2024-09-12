@@ -31,10 +31,10 @@ const VerificationLog = ({
   id,
 }: IVerificationLogType) => {
   const role: string | null = isOnClientSide
-    ? localStorage.getItem("role")
+    ? sessionStorage.getItem("role")
     : null;
   const accessToken = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   // JSX

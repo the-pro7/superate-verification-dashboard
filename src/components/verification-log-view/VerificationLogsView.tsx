@@ -18,7 +18,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
   const { role } = useContext(RoleSwitchContext);
   // Role state
   const accessToken: string | null = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   // Testing the custom query hook
