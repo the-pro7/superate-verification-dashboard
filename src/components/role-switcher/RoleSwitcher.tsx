@@ -24,14 +24,14 @@ export const RoleSwitchProvider = ({
   // Setup role state using RoleType type declaration
   //const [role, setRole] = useState<RoleType>("brand");
   const [role, setRole] = useState<RoleType>(() =>
-    isOnClientSide ? sessionStorage.getItem("role")! || "brand" : "brand"
+    isOnClientSide ? localStorage.getItem("role")! || "brand" : "brand"
   );
 
   // Check if there is already a stored role in ls
   useEffect(() => {
     // Check if there is already a stored role in ls
     const storedRole =
-      typeof window !== "undefined" ? sessionStorage.getItem("role") : null;
+      typeof window !== "undefined" ? localStorage.getItem("role") : null;
 
     // Make sure typeof storedRole is not null
     if (typeof storedRole === "string") {
@@ -44,7 +44,7 @@ export const RoleSwitchProvider = ({
     // Set role to role argument passed
     setRole(role);
     // Store in local storage
-    sessionStorage.setItem("role", role);
+    localStorage.setItem("role", role);
   };
 
   return (

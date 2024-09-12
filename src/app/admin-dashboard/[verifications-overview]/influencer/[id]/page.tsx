@@ -14,7 +14,7 @@ const SingleInfluencerVerificationPage = ({
   params: { id: string | number };
 }) => {
   const role: string | null = isOnClientSide
-    ? sessionStorage.getItem("role")
+    ? localStorage.getItem("role")
     : null;
   const accessToken = isOnClientSide
     ? sessionStorage.getItem("accessToken")
