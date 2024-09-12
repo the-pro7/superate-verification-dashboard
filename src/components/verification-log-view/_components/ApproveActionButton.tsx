@@ -61,7 +61,7 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-         <div className="flex flex-col gap-2 md:flex-row">
+         <div className="flex flex-col gap-2 md:flex-row md:mr-auto">
          <Button
             type="button"
             disabled={mutation.isPending}

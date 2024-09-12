@@ -5,6 +5,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 type TopNavProps = {
   pageText: string;
   showSearchInput?: boolean;
+  query?: string
 };
 
 const TopNav = ({ pageText, showSearchInput = true }: TopNavProps) => {
