@@ -36,6 +36,15 @@ const login = async (reqBody: ILoginProps) => {
   }
 };
 
+// POST
+const logout = async () => {
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}logout`)
+  } catch (error) {
+    console.log(`This is the logout error : ${error}`)
+  }
+}
+
 // GET
 // api/admin/admin/brands-verification-details
 const getVerificationDetails = async <T, V>(
@@ -175,6 +184,7 @@ const getSingleVerificationDetail = async (
 };
 export {
   login,
+  logout,
   getVerificationDetails,
   approveUser,
   disapproveUser,

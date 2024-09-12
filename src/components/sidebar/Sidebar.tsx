@@ -7,9 +7,20 @@ import ExpandSidebarButton, {
   SideBarContext,
 } from "../expand-sidebar/ExpandSidebarButton";
 import { RxExit } from "react-icons/rx";
+import { logout } from "@/utils/dataFetch";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const { expandSidebar } = useContext(SideBarContext);
+  const router = useRouter()
+
+  function handleLogout() {
+    sessionStorage.removeItem('accessToken')
+    sessionStorage.removeItem('refreshToken')
+
+    router.push('/login')
+    
+  }
   return (
     <aside
       className={`${
@@ -45,6 +56,7 @@ const Sidebar = () => {
         className={`mt-auto p-5 rounded-lg hover:bg-white rotate-180 ${
           expandSidebar && "ml-auto"
         }`}
+        onClick={handleLogout}
       >
         <RxExit className="text-xl" />
       </button>

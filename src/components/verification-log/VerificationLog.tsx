@@ -51,7 +51,7 @@ const VerificationLog = ({
       </div>
       <div className="flex gap-2">
         {/* Optionally rendered */}
-        <Link href={`verification-overview/${role}/${id!}`}>
+        <Link href={`verifications-overview/${role}/${id!}`}>
           <IconButton
             color="text-sky-800 bg-sky-300"
             title={`View ${fullLegalName}`}

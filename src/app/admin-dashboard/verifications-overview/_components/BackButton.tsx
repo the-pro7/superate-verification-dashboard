@@ -10,7 +10,7 @@ const BackButton = () => {
         asChild
         className="text-gray-600 mb-5 flex items-center font-semibold hover:underline w-fit"
       >
-        <Link href="/admin-dashboard/verification-overview">
+        <Link href="/admin-dashboard/verifications-overview">
           &larr; Back to all verifications
         </Link>
       </Button>

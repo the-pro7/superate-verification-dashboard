@@ -2,13 +2,13 @@
 import TopNav from '@/components/dashboard-topnav/TopNav'
 import React, { useState } from 'react'
 
-const DisapprovedVerificationsPage = () => {
+const ApprovedVerificationsPage = () => {
     const [query, SetQuery] = useState<string>('')
   return (
     <div>
-        <TopNav pageText='Disapproved Verifications' query={query} setQuery={SetQuery}/>
+        <TopNav pageText='Approved Verifications' query={query}/>
     </div>
   )
 }
 
-export default DisapprovedVerificationsPage
+export default ApprovedVerificationsPage

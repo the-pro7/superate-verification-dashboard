@@ -1,11 +1,12 @@
 "use client";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 type TopNavProps = {
   pageText: string;
   showSearchInput?: boolean;
   query?: string
+  setQuery?: Dispatch<SetStateAction<string>>
 };
 
 const TopNav = ({ pageText, showSearchInput = true }: TopNavProps) => {
