@@ -123,7 +123,11 @@ const disapproveUser = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ is_denied: true, declination_reason }),
+    body: JSON.stringify({
+      is_denied: true,
+      declination_reason,
+      declined_date: new Date().toISOString(),
+    }),
   };
 
   try {
@@ -164,7 +168,6 @@ const getSingleVerificationDetail = async (
 
     let data: IBrandVerificationType | IInfluencerVerificationType =
       await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.log(error);

@@ -6,6 +6,7 @@ import { isOnClientSide } from "@/components/verification-log-view/VerificationL
 import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
+import isBrandVerification from "@/utils/switchType";
 
 const SingleInfluencerVerificationPage = ({
   params: { id },
@@ -25,19 +26,26 @@ const SingleInfluencerVerificationPage = ({
       getSingleVerificationDetail(accessToken!, role!, id as string),
   });
 
-  console.log(data)
+  console.log(data);
 
   if (isLoading) {
     return <h1>Loading</h1>;
   }
+  // {console.log(`Gov image ${data?.go!}`)}
 
   return (
-    <div className="p-5 h-screen relative">
+    <div className="p-5 h-screen">
       {/* Back button */}
       <BackButton />
-      <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-around items-center pt-10">
-        <GovImage imgSrc={data?.government_issued_business_id_image!}/>
-        <UserDetails id={id as string} role="influencer" adminAccessToken={accessToken!} data={data!}/>
+
+      <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-fit md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 md:pt-10">
+        <GovImage imgSrc={(!isBrandVerification(data!) && data?.government_issued_id_image) as string} />
+        <UserDetails
+          id={id as string}
+          role="influencer"
+          adminAccessToken={accessToken!}
+          data={data!}
+        />
       </div>
     </div>
   );

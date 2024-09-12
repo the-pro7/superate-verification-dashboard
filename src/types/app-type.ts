@@ -19,8 +19,6 @@ export interface IVerificationBase {
   id: number;
   country: string;
   selfie_image: string;
-  government_issued_business_id_number: string;
-  government_issued_business_id_image: string;
   location: string;
   is_denied: boolean;
   is_approved: boolean;
@@ -31,6 +29,8 @@ export interface IVerificationBase {
 
 // Brand verification interface
 export type IBrandVerificationType = {
+  government_issued_business_id_image: string;
+  government_issued_business_id_number: string;
   full_legal_name: string;
   phone_number: string;
   website: string;
@@ -42,6 +42,8 @@ export type IBrandVerificationType = {
 export type IInfluencerVerificationType = {
   full_name: string;
   user: number;
+  government_issued_id_image: string;
+  government_issued_id_number: string;
 } & IVerificationBase;
 
 // Types aliases

@@ -12,6 +12,7 @@ import {
   IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
+import isBrandVerification from "@/utils/switchType";
 
 interface UserDetailsProps {
   id: string;
@@ -26,12 +27,7 @@ const UserDetails = ({
   adminAccessToken,
   data,
 }: UserDetailsProps) => {
-  // console.log(data.full_legal_name)
-  function isBrandVerification(
-    item: IBrandVerificationType | IInfluencerVerificationType
-  ): item is IBrandVerificationType {
-    return (item as IBrandVerificationType).full_legal_name !== undefined;
-  }
+
   return (
     <div className="border-2 border-slate-100 bg-slate-100 p-7 rounded-lg">
       {/* User (Brand/Influencer) */}
@@ -46,7 +42,7 @@ const UserDetails = ({
               dialogTrigger={
                 <DialogTrigger asChild>
                   <Image
-                    src={data.selfie_image}
+                    src={data?.selfie_image || '/selfie2.jpeg'}
                     fill
                     alt="Brand Selfie Image"
                     className="object-cover"
@@ -55,17 +51,17 @@ const UserDetails = ({
               }
               title={`Selfie Image for ${role} ${id}`}
               description="Showing full selfie image"
-              imgSrc={data.selfie_image}
+              imgSrc={data?.selfie_image || '/selfie2.jpeg'}
               altText="hello"
             />
           </div>
           <div className="flex flex-col">
             <h1 className="text-3xl md:font-5xl lg:font-7xl font-semibold mb-2">
               {isBrandVerification(data)
-                ? data.full_legal_name
-                : data.full_name}
+                ? data?.full_legal_name || 'None'
+                : data?.full_name || 'None'}
             </h1>
-            <p className="text-gray-500">{data.country || data.location}</p>
+            <p className="text-gray-500">{data?.country || data?.location || 'None'}</p>
           </div>
         </div>
         <span className="inline-block bg-yellow-400 text-black ml-3 py-1 px-2 rounded mb-5 capitalize">
@@ -75,12 +71,12 @@ const UserDetails = ({
 
       {/* Details */}
       {role === "influencer" ? (
-        <div className="flex gap-3 flex-col">
+        <div className="flex gap-3 flex-col md:flex-col">
           <div className="text-gray-700 mb-2">
             <strong>Joined:</strong> 1st August, 2024
           </div>
           <div className="text-gray-700 mb-2">
-            <strong>Government ID Number:</strong> {data.government_issued_business_id_number || 'None'}
+            <strong>Government ID Number:</strong> {data?.government_issued_business_id_number || 'None'}
           </div>
           <div className="text-gray-700 mb-10">
             <strong>Country:</strong> {data.country}
@@ -88,7 +84,7 @@ const UserDetails = ({
         </div>
       ) : (
         // For brand
-      <div className="flex gap-3 flex-col">
+      <div className="flex gap-3 flex-col md:flex-col">
         <div className="text-gray-700 mb-2">
           <strong>Joined:</strong> 1st August, 2024
         </div>
@@ -122,7 +118,7 @@ const UserDetails = ({
 
       {/* Buttons */}
       <div className="flex flex-col ">
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-col md:flex-row">
           <ApproveActionButton
             dialogTrigger={
               <DialogTrigger asChild>

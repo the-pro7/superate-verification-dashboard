@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const GovImage = ({imgSrc}: {imgSrc: string}) => {
   return (
-    <div className="w-1/2 aspect-square rounded-md overflow-clip relative shadow-lg grid">
+    <div className="w-[80%] max-h-full md:h-auto md:w-1/2 md:aspect-square rounded-md overflow-clip relative shadow-xl grid">
       <Image
         src={imgSrc}
         alt="Government ID"
