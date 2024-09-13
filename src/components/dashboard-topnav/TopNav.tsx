@@ -6,10 +6,10 @@ type TopNavProps = {
   pageText: string;
   showSearchInput?: boolean;
   query?: string
-  setQuery?: Dispatch<SetStateAction<string>>
+  setQuery: Dispatch<SetStateAction<string>>
 };
 
-const TopNav = ({ pageText, showSearchInput = true }: TopNavProps) => {
+const TopNav = ({ pageText, showSearchInput = true, query, setQuery }: TopNavProps) => {
   return (
     <nav className={`flex justify-between w-full items-center py-6`}>
       <h1 className="text-2xl font-bold tracking-wider">{pageText}</h1>
@@ -19,6 +19,8 @@ const TopNav = ({ pageText, showSearchInput = true }: TopNavProps) => {
             type="search"
             name="verification-searchbox"
             placeholder="Search something..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             title="Search something..."
             className="[all:unset] py-2 px-5 placeholder:font-light border-2 border-gray-500"
           />

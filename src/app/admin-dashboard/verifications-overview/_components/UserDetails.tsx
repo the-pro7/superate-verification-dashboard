@@ -43,6 +43,7 @@ const UserDetails = ({
                   <Image
                     src={data?.selfie_image || "/selfie2.jpeg"}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt="Brand Selfie Image"
                     className="object-cover"
                   />

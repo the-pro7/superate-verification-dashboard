@@ -42,7 +42,7 @@ const VerificationLog = ({
     <div className="flex items-center justify-between flex-col gap-3 md:gap-0 md:flex-row px-4 rounded-lg shadow-xl py-4 md:py-2 bg-white w-[95%] mx-auto mt-5">
       <div className="flex gap-3 items-center">
         <div className="relative w-12 h-12 rounded-full bg-gray-200 overflow-clip">
-          <Image src={selfieImage} alt="" fill className="object-cover" />
+          <Image src={selfieImage} alt="" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
         </div>
         <div className="flex flex-col gap-1">
           <h3 className="font-bold text-xl tracking-wide">{fullLegalName}</h3>

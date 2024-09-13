@@ -7,6 +7,7 @@ const GovImage = ({imgSrc}: {imgSrc: string}) => {
         src={imgSrc}
         alt="Government ID"
         fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="rounded-lg object-cover shadow-lg col-span-1 row-span-1"
       />
       <span className="text-xs tracking-wider col-span-1 row-span-1 z-10 rounded-full bg-white font-semibold p-3 shadow-lg m-5 w-fit h-fit">

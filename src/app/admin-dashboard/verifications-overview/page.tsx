@@ -1,23 +1,27 @@
-
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import TopNav from "@/components/dashboard-topnav/TopNav";
 import RoleSwitcher from "@/components/role-switcher/RoleSwitcher";
 import PageText from "@/components/page-text/PageText";
-import VerificationLog from "@/components/verification-log/VerificationLog";
 import BrandsVerificationLogsView from "@/components/verification-log-view/VerificationLogsView";
 
-const page = () => {
+const AllVerificationsPage = () => {
+  const [query, setQuery] = useState<string>("");
   return (
     <>
-      <TopNav pageText="Verifications Panel"/>
+      <TopNav
+        pageText="Verifications Panel"
+        query={query}
+        setQuery={setQuery}
+      />
       <div className="flex items-center justify-between mr-5 mx-auto">
         <PageText />
         <RoleSwitcher />
       </div>
       {/* <VerificationLog selfieImage="/logo.png" fullLegalName="Emmanuel Ameyaw" location="Tamale, Ghana"/> */}
-      <BrandsVerificationLogsView />
+      <BrandsVerificationLogsView query={query} />
     </>
   );
 };
 
-export default page;
+export default AllVerificationsPage;

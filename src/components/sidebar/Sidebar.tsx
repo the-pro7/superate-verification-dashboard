@@ -25,8 +25,8 @@ const Sidebar = () => {
     <aside
       className={`${
         styles.container
-      } !max-w-[100px] lg:mb-0 lg:shadow-none lg:w-[12.35%] ${
-        expandSidebar && "lg:!w-[35%] md:w-1/2 lg:!max-w-none"
+      } !max-w-[100px] lg:mb-0 lg:shadow-none lg:w-[7.35%] ${
+        expandSidebar && "lg:!w-[25%] md:w-1/2 lg:!max-w-none"
       } z-50 bg-gray-200 p-4 flex items-center flex-row lg:flex-col md:flex-row w-4/5 mx-auto bottom-0 justify-between mb-3 rounded-lg !max-w-none gap-3 shadow-lg lg:relative absolute inset-x-0`}
     >
       <ExpandSidebarButton />

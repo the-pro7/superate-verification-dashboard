@@ -35,7 +35,6 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       </h1>
     );
 
-
   const filteredData:
     | (IBrandVerificationType | IInfluencerVerificationType)[]
     | undefined = data?.filter(
@@ -43,11 +42,23 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       item.is_approved === false && item.is_denied === false
   );
 
+  const searchedData = query
+    ? filteredData?.filter((item) =>
+        isBrandVerification(item)
+          ? item.full_legal_name.toLowerCase().includes(query)
+          : item.full_name.toLowerCase().includes(query)
+      )
+    : filteredData;
 
   return (
     <div className="h-[65%] my-3 py-3 overflow-y-scroll custom-scrollbar">
-      {filteredData && filteredData?.length != 0 ? (
-        filteredData.map(
+      {query && (
+        <div className="text-xl font-semibold">
+          Showing search results for &apos;{query}&apos;
+        </div>
+      )}
+      {searchedData && searchedData?.length != 0 ? (
+        searchedData.map(
           (item: IBrandVerificationType | IInfluencerVerificationType) => (
             <VerificationLog
               key={item.id}
@@ -65,11 +76,11 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       ) : (
         <h1>No {role} verifications to view</h1>
       )}
-      <VerificationLog
+      {/* <VerificationLog
         fullLegalName="Emma"
         location="Tuobodom"
         selfieImage="/logo.png"
-      />
+      /> */}
     </div>
   );
 };

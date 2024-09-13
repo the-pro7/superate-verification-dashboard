@@ -4,8 +4,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, useEffect, useState } from "react";
-import { IoClose } from "react-icons/io5";
+import { useEffect, useState } from "react";
 
 export default function Home() {
   const router = useRouter();
@@ -16,6 +15,10 @@ export default function Home() {
     if (typeof window != "undefined") {
       // Then access token
       setAccessToken(sessionStorage.getItem("accessToken"));
+
+      if (!localStorage.getItem("role")) {
+        localStorage.setItem("role", "brand");
+      }
     }
   }, []);
 
@@ -38,13 +41,13 @@ export default function Home() {
         </p>
       </div>
       <div className="inline">
-        {accessToken && accessToken !== null ? (
+        {accessToken ? (
           <button
             className="btn bg-sky-500 p-4 rounded-lg text-white tracking-wider font-semibold font-poppins"
             type="button"
             title="Go to admin verifications dashboard"
             onClick={() => {
-              if (accessToken && typeof accessToken !== null) {
+              if (accessToken && typeof accessToken !== "undefined") {
                 router.push("/admin-dashboard");
               }
             }}
@@ -60,27 +63,6 @@ export default function Home() {
           </Link>
         )}
       </div>
-      {/* <dialog ref={dialogRef} className="p-4 w-4/12 overflow-clip rounded-lg">
-        <div className="flex items-end justify-end">
-          <Button
-            type="button"
-            onClick={closeDialog}
-            title="Close Dialog"
-            className="font-light bg-gray-500 text-white hover:bg-black mb-3 rounded-full"
-          >
-            <IoClose className="text-2xl" />
-          </Button>
-        </div>
-        <div className="my-2 flex flex-col gap-2 items-center">
-          <h2 className="text-2xl font-bold tracking-wider">
-            Superate Authorization
-          </h2>
-          <p className="text-sm font-medium tracking-wide text-center text-neutral-500">
-            Let&apos;s verify that you&apos;re an admin.
-          </p>
-        </div>
-        <LoginForm />
-      </dialog> */}
     </main>
   );
 }
