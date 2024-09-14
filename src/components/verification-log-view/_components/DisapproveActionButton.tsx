@@ -7,12 +7,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import Image from "next/image";
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import DeclinationReasonForm from "@/components/decline-reason-form/DeclinationReasonForm";
 import { IActionButtonProps } from "@/types/app-type";
-import { disapproveUser } from "@/utils/dataFetch";
 
 const DisapproveActionButton: React.FC<IActionButtonProps> = ({
   title,
@@ -24,8 +22,12 @@ const DisapproveActionButton: React.FC<IActionButtonProps> = ({
 }) => {
   const [showDeclinationForm, setShowDeclinationForm] =
     useState<boolean>(false);
+
+  // State to handle dialog closing and opening
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       {dialogTrigger}
       <DialogContent>
         <DialogHeader>
@@ -34,7 +36,7 @@ const DisapproveActionButton: React.FC<IActionButtonProps> = ({
         </DialogHeader>
         <DialogFooter>
           <div className="flex flex-col gap-3 w-full">
-            <div className="flex gap-3 items-center mr-auto">
+            <div className="flex gap-3 flex-col w-full md:mr-auto md:flex-row">
               <Button
                 type="button"
                 variant="destructive"
@@ -60,6 +62,7 @@ const DisapproveActionButton: React.FC<IActionButtonProps> = ({
                 setFormShowStatus={setShowDeclinationForm}
                 accessToken={accessToken}
                 role={role}
+                setIsOpen={setIsOpen}
               />
             )}
           </div>

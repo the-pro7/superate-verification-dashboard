@@ -9,6 +9,7 @@ import { useVerificationDetails } from "@/hooks/query";
 import { RoleSwitchContext } from "../role-switcher/RoleSwitcher";
 import { RotatingLines } from "react-loader-spinner";
 import VerificationLog from "../verification-log/VerificationLog";
+import isBrandVerification from "@/utils/switchType";
 
 // Check if user is on client
 export const isOnClientSide: boolean = typeof window !== "undefined";
@@ -34,18 +35,12 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       </h1>
     );
 
-  // Type guard to check if the item is of type IBrandVerificationType
-  function isBrandVerification(
-    item: IBrandVerificationType | IInfluencerVerificationType
-  ): item is IBrandVerificationType {
-    return (item as IBrandVerificationType).full_legal_name !== undefined;
-  }
 
   const filteredData:
     | (IBrandVerificationType | IInfluencerVerificationType)[]
     | undefined = data?.filter(
     (item: IBrandVerificationType | IInfluencerVerificationType) =>
-      item.is_approved === false
+      item.is_approved === false && item.is_denied === false
   );
 
 

@@ -40,7 +40,9 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
       toast.success(`Approved ${role} successfully`);
     },
     onError: () => {
+      // Close the dialog
       setIsOpen(false);
+      // SHow error message for failed disapproval
       toast.error(`Failed to approve ${role}, try again`);
     },
   });
@@ -58,8 +60,9 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:justify-start">
-          <Button
+        <DialogFooter>
+         <div className="flex flex-col gap-2 md:flex-row md:mr-auto">
+         <Button
             type="button"
             disabled={mutation.isPending}
             onClick={handleApproval}
@@ -71,6 +74,7 @@ const ApproveActionButton: React.FC<IActionButtonProps> = ({
               Close
             </Button>
           </DialogClose>
+         </div>
         </DialogFooter>
       </DialogContent>
     </Dialog>

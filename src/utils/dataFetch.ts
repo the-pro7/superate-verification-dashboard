@@ -1,6 +1,11 @@
 "use server";
 // Gey user role to make requests with
-import { ILoginProps, RoleType } from "@/types/app-type";
+import {
+  IBrandVerificationType,
+  IInfluencerVerificationType,
+  ILoginProps,
+  RoleType,
+} from "@/types/app-type";
 import { revalidatePath } from "next/cache";
 
 // POST
@@ -59,11 +64,12 @@ const getVerificationDetails = async <T, V>(
 
     return data;
   } catch (error: any) {
-    console.log(error);
+    console.log(`This caused the error ${error.cause}`);
     return [];
   }
 };
 
+// Approve User
 const approveUser = async (accessToken: string, role: string, id: string) => {
   // Construct the request body
   const body = JSON.stringify({ is_approved: true });
@@ -104,6 +110,7 @@ const approveUser = async (accessToken: string, role: string, id: string) => {
   }
 };
 
+// Disapprove User
 const disapproveUser = async (
   accessToken: string,
   role: string,
@@ -116,7 +123,11 @@ const disapproveUser = async (
       "Content-Type": "application/json",
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify({ is_denied: true, declination_reason }),
+    body: JSON.stringify({
+      is_denied: true,
+      declination_reason,
+      declined_date: new Date().toISOString(),
+    }),
   };
 
   try {
@@ -144,7 +155,6 @@ const getSingleVerificationDetail = async (
 ) => {
   const apiUrl = `${process.env.NEXT_PUBLIC_API_ADMIN_BASE_URL}${role}-verification-details/${id}/`;
 
-  console.log(`apiUrl : ${apiUrl}`);
   const fetchOptions = {
     method: "GET",
     headers: {
@@ -156,8 +166,9 @@ const getSingleVerificationDetail = async (
   try {
     const response = await fetch(apiUrl, fetchOptions);
 
-    let data = await response.json();
-    console.log(data);
+    let data: IBrandVerificationType | IInfluencerVerificationType =
+      await response.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
