@@ -17,7 +17,7 @@ const SingleBrandVerificationPage = ({
     ? localStorage.getItem("role")
     : null;
   const accessToken = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   const { data, error, isLoading } = useQuery({

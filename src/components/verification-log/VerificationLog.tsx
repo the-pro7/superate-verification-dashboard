@@ -34,7 +34,7 @@ const VerificationLog = ({
     ? localStorage.getItem("role")
     : null;
   const accessToken = isOnClientSide
-    ? localStorage.getItem("accessToken")
+    ? sessionStorage.getItem("accessToken")
     : null;
 
   // JSX
