@@ -18,6 +18,7 @@ import { login } from "@/utils/dataFetch";
 import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { ILoginDataProps } from "@/types/app-type";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   username: z.string().min(8, {
@@ -71,6 +72,7 @@ export default function LoginForm() {
           localStorage.setItem("accessToken", data.access);
           localStorage.setItem("refreshToken", data.refresh);
           router.push("/admin-dashboard");
+          toast.success('Signed in successfully!')
         }
       } catch (error: any) {
         console.error(`This is the error: ${error}`);

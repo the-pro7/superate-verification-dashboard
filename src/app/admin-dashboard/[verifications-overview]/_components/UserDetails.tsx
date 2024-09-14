@@ -8,14 +8,25 @@ import { DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import ApproveActionButton from "@/components/verification-log-view/_components/ApproveActionButton";
 import DisapproveActionButton from "@/components/verification-log-view/_components/DisapproveActionButton";
+import {
+  IBrandVerificationType,
+  IInfluencerVerificationType,
+} from "@/types/app-type";
+import isBrandVerification from "@/utils/switchType";
 
 interface UserDetailsProps {
   id: string;
   role: "brand" | "influencer";
   adminAccessToken: string;
+  data: IBrandVerificationType | IInfluencerVerificationType;
 }
 
-const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
+const UserDetails = ({
+  id,
+  role,
+  adminAccessToken,
+  data,
+}: UserDetailsProps) => {
   return (
     <div className="border-2 border-slate-100 bg-slate-100 p-7 rounded-lg">
       {/* User (Brand/Influencer) */}
@@ -30,7 +41,7 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
               dialogTrigger={
                 <DialogTrigger asChild>
                   <Image
-                    src="/selfie2.jpeg"
+                    src={data?.selfie_image || "/selfie2.jpeg"}
                     fill
                     alt="Brand Selfie Image"
                     className="object-cover"
@@ -39,15 +50,19 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
               }
               title={`Selfie Image for ${role} ${id}`}
               description="Showing full selfie image"
-              imgSrc="/selfie2.jpeg"
+              imgSrc={data?.selfie_image || "/selfie2.jpeg"}
               altText="hello"
             />
           </div>
           <div className="flex flex-col">
             <h1 className="text-3xl md:font-5xl lg:font-7xl font-semibold mb-2">
-              John Doe {id}{" "}
+              {isBrandVerification(data)
+                ? data?.full_legal_name || "None"
+                : data?.full_name || "None"}
             </h1>
-            <p className="text-gray-500">Tema, Ghana</p>
+            <p className="text-gray-500">
+              {data?.country || data?.location || "None"}
+            </p>
           </div>
         </div>
         <span className="inline-block bg-yellow-400 text-black ml-3 py-1 px-2 rounded mb-5 capitalize">
@@ -56,67 +71,126 @@ const UserDetails = ({ id, role, adminAccessToken }: UserDetailsProps) => {
       </div>
 
       {/* Details */}
-      <div className="flex gap-3 flex-col">
-        <div className="text-gray-700 mb-2">
-          <strong>Joined:</strong> 1st August, 2024
+      {role === "influencer" ? (
+        <div className="flex gap-3 flex-col md:flex-col">
+          <div className="text-gray-700 mb-2">
+            <strong>Joined:</strong> 1st August, 2024
+          </div>
+          <div className="text-gray-700 mb-2">
+            <strong>Government ID Number:</strong>{" "}
+            {(!isBrandVerification(data) && data.government_issued_id_number) ||
+              "None"}
+          </div>
+          <div className="text-gray-700 mb-10">
+            <strong>Country:</strong> {data.country}
+          </div>
         </div>
-        <div className="text-gray-700 mb-2">
-          <strong>Phone:</strong> 0559911770
+      ) : (
+        // For brand
+        <div className="flex gap-3 flex-col md:flex-col">
+          <div className="text-gray-700 mb-2">
+            <strong>Joined:</strong> 1st August, 2024
+          </div>
+          <div className="text-gray-700 mb-2">
+            <strong>Phone:</strong>{" "}
+            {isBrandVerification(data) && data.phone_number}
+          </div>
+          <div className="text-gray-700 mb-2">
+            <strong>Government ID Number:</strong>{" "}
+            {isBrandVerification(data) &&
+              data.government_issued_business_id_number}
+          </div>
+          <div className="text-gray-700">
+            <strong>Website:</strong>{" "}
+            {isBrandVerification(data) && data.website !== "" ? (
+              <a
+                href={data.website}
+                target="_blank"
+                type="link"
+                // rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                {data.website}
+              </a>
+            ) : (
+              "None"
+            )}
+          </div>
+          <div className="text-gray-700 mb-1">
+            <strong>Address:</strong>{" "}
+            {(isBrandVerification(data) && data.address) || "None"}
+          </div>
+          <div className="text-gray-700 mb-3">
+            <strong>Location:</strong>{" "}
+            {(isBrandVerification(data) && data.location) || "None"}
+          </div>
+          {data.is_denied && (
+            <div className="text-gray-700 mb-3">
+              <strong>Is Denied:</strong> true
+            </div>
+          )}
         </div>
-        <div className="text-gray-700 mb-2">
-          <strong>Website:</strong>{" "}
-          <Link
-            href="http://www.example.com"
-            target="_blank"
-            // rel="noopener noreferrer"
-            className="text-blue-600 hover:underline"
-          >
-            www.example.com
-          </Link>
-        </div>
-        <div className="text-gray-700 mb-10">
-          <strong>Address:</strong> VQ-20 Crimson Road
-        </div>
-      </div>
+      )}
 
-      {/* Buttons */}
-      <div className="flex flex-col ">
-        <div className="flex gap-3">
-          <ApproveActionButton
-            dialogTrigger={
-              <DialogTrigger asChild>
-                <Button className="btn rounded-xl p-6 text-sm bg-green-300 text-green-800 text-[1em]">
-                  <FaCheckCircle className="mr-2" />
-                  Approve
-                </Button>
-              </DialogTrigger>
-            }
-            title="Approve"
-            description="Approve"
-            role={role}
-            roleId={id}
-            accessToken={adminAccessToken}
-          />
-          <DisapproveActionButton
-            dialogTrigger={
-              <DialogTrigger asChild>
-                <Button className="btn rounded-xl p-6 text-sm bg-red-300 text-red-800 text-[1em]">
-                  <FaTimesCircle className="mr-2" /> Decline
-                </Button>
-              </DialogTrigger>
-            }
-            title="Disapprove"
-            description="Disapprove"
-            role={role}
-            roleId={id}
-            accessToken={adminAccessToken}
-          />
+{/* Logic to show or not to show buttons if user is denied */}
+      {data.is_denied ? (
+        <div className="flex flex-col gap-2">
+          <h4>This user has been denied</h4>
+          <div>
+            <p>
+              This is the reason for declination:{" "}
+              <span>{data.declination_reason}</span>
+            </p>
+          </div>
         </div>
-        <span className="mt-6 text-gray-700 inline-flex gap-3 items-center">
-          <IoWarningOutline className="text-xl" />
-          <b>Note:</b>Any of these actions are not reversible
-        </span>
-      </div>
+      ) : (
+        // Buttons
+        <div className="flex flex-col">
+          <div className="flex gap-3 flex-col md:flex-row">
+            <ApproveActionButton
+              dialogTrigger={
+                <DialogTrigger asChild>
+                  <Button className="btn rounded-xl p-6 text-sm bg-green-300 text-green-800 text-[1em]">
+                    <FaCheckCircle className="mr-2" />
+                    Approve
+                  </Button>
+                </DialogTrigger>
+              }
+              title="Approve"
+              description="Approve"
+              role={role}
+              roleId={id}
+              accessToken={adminAccessToken}
+            />
+            <DisapproveActionButton
+              dialogTrigger={
+                <DialogTrigger asChild>
+                  <Button className="btn rounded-xl p-6 text-sm bg-red-300 text-red-800 text-[1em]">
+                    <FaTimesCircle className="mr-2" /> Decline
+                  </Button>
+                </DialogTrigger>
+              }
+              title={`Disapprove brand '${
+                isBrandVerification(data)
+                  ? data.full_legal_name
+                  : data.full_name
+              }'`}
+              description={`Confirm disapproval of '${
+                isBrandVerification(data)
+                  ? data.full_legal_name
+                  : data.full_name
+              }'`}
+              role={role}
+              roleId={id}
+              accessToken={adminAccessToken}
+            />
+          </div>
+          <span className="mt-6 text-gray-700 inline-flex gap-3 items-center">
+            <IoWarningOutline className="text-xl" />
+            <b>Note:</b>Any of these actions are not reversible
+          </span>
+        </div>
+      )}
     </div>
   );
 };

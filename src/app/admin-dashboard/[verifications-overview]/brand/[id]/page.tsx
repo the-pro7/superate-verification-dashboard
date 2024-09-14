@@ -6,6 +6,7 @@ import { isOnClientSide } from "@/components/verification-log-view/VerificationL
 import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
+import isBrandVerification from "@/utils/switchType";
 
 const SingleBrandVerificationPage = ({
   params: { id },
@@ -22,8 +23,15 @@ const SingleBrandVerificationPage = ({
   const { data, error, isLoading } = useQuery({
     queryKey: ["brand-verification"],
     queryFn: () =>
-      getSingleVerificationDetail(accessToken!, role!, id as string),
+      getSingleVerificationDetail(
+        accessToken as string,
+        role as string,
+        id as string
+      ),
   });
+
+  console.log(data);
+  // console.log(`The error is : ${error}`)
 
   if (isLoading) {
     return <h1>Loading</h1>;
@@ -33,9 +41,19 @@ const SingleBrandVerificationPage = ({
     <div className="p-5 h-screen relative">
       {/* Back button */}
       <BackButton />
-      <div className="flex flex-col gap-6 md:flex-row md:gap-0 justify-around items-center pt-10">
-        <GovImage />
-        <UserDetails id={id as string} role="brand" adminAccessToken={accessToken!}/>
+      <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-fit md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 md:pt-10">
+        <GovImage
+          imgSrc={
+            (isBrandVerification(data!) &&
+              data.government_issued_business_id_image) as string
+          }
+        />
+        <UserDetails
+          id={id as string}
+          role="brand"
+          adminAccessToken={accessToken!}
+          data={data!}
+        />
       </div>
     </div>
   );
