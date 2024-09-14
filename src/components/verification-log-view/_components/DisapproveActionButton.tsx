@@ -36,7 +36,7 @@ const DisapproveActionButton: React.FC<IActionButtonProps> = ({
         </DialogHeader>
         <DialogFooter>
           <div className="flex flex-col gap-3 w-full">
-            <div className="flex gap-3 items-center mr-auto">
+            <div className="flex gap-3 flex-col w-full md:mr-auto md:flex-row">
               <Button
                 type="button"
                 variant="destructive"
