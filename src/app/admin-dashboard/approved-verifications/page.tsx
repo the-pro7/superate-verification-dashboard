@@ -45,7 +45,10 @@ const ApprovedVerificationsPage = () => {
       )
     : filteredData;
 
-  console.log(filteredData);
+  // In case there ain't no approved verifications data
+  if (filteredData?.length === 0) {
+    return <h1>No approved verifications found for {role}</h1>;
+  }
 
   return (
     <div>
@@ -64,14 +67,9 @@ const ApprovedVerificationsPage = () => {
         </div>
       )}
       {/* Something for loading UI */}
-      {isLoading && (
-        <h3 className="font-semibold text-2xl text-center mt-5">
-          Loading approved verifications...
-        </h3>
-      )}
-      <section className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
+      <section className="h-[500px] overflow-y-scroll py-4 md:h-full md:overflow-y-hidden grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
         {showableData &&
-          showableData.length !== 0 &&
+          showableData.length !== 0 ?
           showableData.map((item) => (
             // <VerificationLog />
             <Card key={item.id} className="mt-4 w-full overflow-clip shadow-lg">
@@ -90,7 +88,7 @@ const ApprovedVerificationsPage = () => {
                   Government ID Image
                 </span>
               </CardHeader>
-              <CardContent className="mt-2">
+              <CardContent className="mt-2 flex flex-col justify-start items-start">
                 <div className="flex gap-2 items-center">
                   <div className="relative w-14 h-14 rounded-full shadow-lg overflow-clip">
                     <Image
@@ -101,24 +99,26 @@ const ApprovedVerificationsPage = () => {
                     />
                   </div>
                   <CardTitle className="flex gap-2">
-                    <h1>
+                    <div>
                       {isBrandVerification(item)
                         ? item.full_legal_name
                         : item.full_name}
-                    </h1>
+                    </div>
                     <span>
                       <RiVerifiedBadgeFill />
                     </span>
                   </CardTitle>
                 </div>
-                <CardDescription>
+                <CardDescription className="mt-2">
                   {isBrandVerification(item)
                     ? `Location - ${item.location}`
                     : `Country - ${item.country}`}
                 </CardDescription>
               </CardContent>
             </Card>
-          ))}
+          )): (<div suppressHydrationWarning>
+            {isLoading ? 'Loading verification data' : 'No data to be shown'}
+          </div>)}
       </section>
     </div>
   );

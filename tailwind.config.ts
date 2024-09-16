@@ -78,7 +78,7 @@ const config = {
       // poppins: ['var(--font-poppins)']
     }
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), ],
 } satisfies Config
 
 export default config

@@ -6,9 +6,8 @@ import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton
 import { RoleSwitchProvider } from "@/components/role-switcher/RoleSwitcher";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { isOnClientSide } from "@/components/verification-log-view/VerificationLogsView";
-
 
 export const queryClient = new QueryClient();
 
@@ -17,23 +16,21 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     ? sessionStorage.getItem("accessToken")
     : null;
 
-    const router = useRouter()
-
   // Protect route if user is not authenticated
-  if(!accessToken) {
-    return router.push("/")
-  }
-  
+  // if (!accessToken) {
+  //   return redirect("/");
+  // }
+
   return (
     <div
-      className={`${styles.container} justify-between md:flex-col-reverse lg:flex-row relative`}
+      className={`${styles.container} justify-between md:flex-col-reverse lg:flex-row relative overflow-hidden`}
     >
       <QueryClientProvider client={queryClient}>
         <SidebarProvider>
-            <RoleSwitchProvider>
-              <Sidebar />
-              <main className="w-full h-full px-8">{children}</main>
-            </RoleSwitchProvider>
+          <RoleSwitchProvider>
+            <Sidebar />
+            <main className="w-full h-full px-8">{children}</main>
+          </RoleSwitchProvider>
         </SidebarProvider>
         <ReactQueryDevtools />
       </QueryClientProvider>

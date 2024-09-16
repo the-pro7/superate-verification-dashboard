@@ -58,8 +58,6 @@ export default function LoginForm() {
       try {
         const data: ILoginDataProps = await login(values);
 
-        console.log(data);
-
         if (!data) {
           setError("root", {
             message: "Failed to login, Check your network and try again.",
@@ -71,8 +69,8 @@ export default function LoginForm() {
         if (data.access && data.refresh && data.user) {
           sessionStorage.setItem("accessToken", data.access);
           sessionStorage.setItem("refreshToken", data.refresh);
-          router.push("/admin-dashboard");
-          toast.success('Signed in successfully!')
+          router.push("/admin-dashboard/verifications-overview");
+          toast.success("Signed in successfully!");
         }
       } catch (error: any) {
         console.error(`This is the error: ${error}`);
