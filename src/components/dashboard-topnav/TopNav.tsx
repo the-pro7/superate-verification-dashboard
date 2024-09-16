@@ -6,7 +6,7 @@ type TopNavProps = {
   pageText: string;
   showSearchInput?: boolean;
   query?: string
-  setQuery: Dispatch<SetStateAction<string>>
+  setQuery?: Dispatch<SetStateAction<string>>
 };
 
 const TopNav = ({ pageText, showSearchInput = true, query, setQuery }: TopNavProps) => {
@@ -20,7 +20,7 @@ const TopNav = ({ pageText, showSearchInput = true, query, setQuery }: TopNavPro
             name="verification-searchbox"
             placeholder="Search something..."
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => setQuery && setQuery(e.target.value)}
             title="Search something..."
             className="[all:unset] py-2 px-5 placeholder:font-light border-2 border-gray-5"
           />

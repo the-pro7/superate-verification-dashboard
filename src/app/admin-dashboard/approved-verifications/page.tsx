@@ -68,8 +68,7 @@ const ApprovedVerificationsPage = () => {
       )}
       {/* Something for loading UI */}
       <section className="h-[500px] overflow-y-scroll py-4 md:h-full md:overflow-y-hidden grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {showableData &&
-          showableData.length !== 0 ?
+        {showableData && showableData.length !== 0 ? (
           showableData.map((item) => (
             // <VerificationLog />
             <Card key={item.id} className="mt-4 w-full overflow-clip shadow-lg">
@@ -116,9 +115,12 @@ const ApprovedVerificationsPage = () => {
                 </CardDescription>
               </CardContent>
             </Card>
-          )): (<div suppressHydrationWarning>
-            {isLoading ? 'Loading verification data' : 'No data to be shown'}
-          </div>)}
+          ))
+        ) : (
+          <div suppressHydrationWarning>
+            {isLoading ? "Loading verification data" : "No data to be shown"}
+          </div>
+        )}
       </section>
     </div>
   );

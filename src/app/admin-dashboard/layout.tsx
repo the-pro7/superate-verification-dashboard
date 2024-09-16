@@ -1,7 +1,7 @@
 "use client";
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./layout.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton";
 import { RoleSwitchProvider } from "@/components/role-switcher/RoleSwitcher";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
@@ -16,10 +16,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     ? sessionStorage.getItem("accessToken")
     : null;
 
+
   // Protect route if user is not authenticated
-  // if (!accessToken) {
-  //   return redirect("/");
-  // }
+  if (!accessToken) {
+    return redirect("/");
+  }
 
   return (
     <div

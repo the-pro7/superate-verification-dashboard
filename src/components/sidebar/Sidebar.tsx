@@ -7,17 +7,23 @@ import { RxExit } from "react-icons/rx";
 import { redirect } from "next/navigation";
 import { FaAngleRight } from "react-icons/fa6";
 import Link from "next/link";
+import { toast } from "sonner";
+import { logout } from "@/utils/dataFetch";
 // import { CgMore } from "react-icons/cg";
 
 const Sidebar = () => {
   const [collapse, setCollapse] = useState<boolean>(false);
 
   console.log(`Collapse ${collapse}`);
-  function handleLogout() {
-    sessionStorage.removeItem("accessToken");
-    sessionStorage.removeItem("refreshToken");
-
-    redirect("/login");
+  async function handleLogout() {
+    try {
+      sessionStorage.removeItem("accessToken");
+      sessionStorage.removeItem("refreshToken");
+      toast.success('Logged out successfully')
+      redirect("/login");
+    } catch (error) {
+      toast.error('Could not log you out, try again!')
+    }
   }
   return (
     <aside

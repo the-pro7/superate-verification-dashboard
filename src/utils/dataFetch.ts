@@ -40,8 +40,28 @@ const login = async (reqBody: ILoginProps) => {
 const logout = async () => {
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}logout`)
+    
+    return response.json()
   } catch (error) {
     console.log(`This is the logout error : ${error}`)
+  }
+}
+
+const refreshToken = async (refreshToken: string, accessToken: string) => {
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`
+    },
+    body: JSON.stringify({refresh: refreshToken})
+  }
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}token/refresh/`, fetchOptions)
+    const data = await response.json()
+    console.log(data)
+  } catch (error) {
+    console.log(`An error occurred : ${error}`)
   }
 }
 
@@ -189,4 +209,5 @@ export {
   approveUser,
   disapproveUser,
   getSingleVerificationDetail,
+  refreshToken
 };
