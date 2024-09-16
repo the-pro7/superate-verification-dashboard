@@ -1,41 +1,46 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styles from "./Sidebar.module.css";
 import SideBarList from "./sidebar-list/SideBarList";
 import Image from "next/image";
-import ExpandSidebarButton, {
-  SideBarContext,
-} from "../expand-sidebar/ExpandSidebarButton";
 import { RxExit } from "react-icons/rx";
-import { logout } from "@/utils/dataFetch";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { FaAngleRight } from "react-icons/fa6";
+import Link from "next/link";
+// import { CgMore } from "react-icons/cg";
 
 const Sidebar = () => {
-  const { expandSidebar } = useContext(SideBarContext);
-  const router = useRouter()
+  const [collapse, setCollapse] = useState<boolean>(false);
 
+  console.log(`Collapse ${collapse}`);
   function handleLogout() {
-    sessionStorage.removeItem('accessToken')
-    sessionStorage.removeItem('refreshToken')
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
 
-    router.push('/login')
-    
+    redirect("/login");
   }
   return (
     <aside
       className={`${
         styles.container
-      } !max-w-[100px] lg:mb-0 lg:shadow-none lg:w-[7.35%] ${
-        expandSidebar && "lg:!w-[25%] md:w-1/2 lg:!max-w-none"
-      } z-50 bg-gray-200 p-4 flex items-center flex-row lg:flex-col md:flex-row w-4/5 mx-auto bottom-0 justify-between mb-3 rounded-lg !max-w-none gap-3 shadow-lg lg:relative absolute inset-x-0`}
+      }  lg:mb-0 lg:shadow-none lg:w-[9.35%] lg:h-dvh transition-all z-50 bg-gray-200 p-4 flex items-center flex-row lg:flex-col md:flex-row w-4/5 mx-auto bottom-0 justify-between mb-3 rounded-lg !max-w-none gap-3 shadow-lg md:relative absolute inset-x-0 ${
+        collapse && "translate-y-28"
+      }`}
     >
-      <ExpandSidebarButton />
-      <div
-        className={`flex gap-2 items-center justify-start mr-auto ${
-          !expandSidebar && "gap-0 justify-center !mr-0"
-        }`}
+      <button
+        type="button"
+        title={`${collapse ? "Expand navigation" : "Collapse navigation"}`}
+        className={`absolute transition-all -top-12 shadow-xl border border-slate-200 flex items-center justify-center h-10 w-10 rounded-full bg-white z-10 cursor-pointer lg:hidden `}
+        onClick={() => setCollapse((prev) => !prev)}
       >
-        <div
+        <FaAngleRight className={`text-xs rotate-90 ${collapse && "!-rotate-90"}`} />
+      </button>
+      <div
+        className={`flex gap-2 items-center justify-start`}
+        title="Superate App logo"
+      >
+        <Link
+          href="/"
           className={`w-16 h-16 rounded-full overflow-clip bg-white relative `}
         >
           <Image
@@ -44,18 +49,13 @@ const Sidebar = () => {
             alt="Superate logo"
             className="object-cover"
           />
-        </div>
-        {expandSidebar && (
-          <h1 className="text-2xl font-black tracking-wider">Superate</h1>
-        )}
+        </Link>
       </div>
       <SideBarList />
       <button
         title="logout"
         type="button"
-        className={`mt-auto p-5 rounded-lg hover:bg-white rotate-180 ${
-          expandSidebar && "ml-auto"
-        }`}
+        className={`mt-auto p-5 rounded-lg hover:bg-white rotate-180`}
         onClick={handleLogout}
       >
         <RxExit className="text-xl" />

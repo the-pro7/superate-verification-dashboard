@@ -55,8 +55,6 @@ const DisapprovedVerificationsPage = () => {
       : item.full_name.toLocaleLowerCase().includes(query)
   );
 
-  console.log(filteredData)
-
   const queryClient = useQueryClient();
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (params: { id: string }) => {
@@ -69,7 +67,7 @@ const DisapprovedVerificationsPage = () => {
       });
       // Show a success toast for the successful disapproval
       toast.success(`Edited declination reason successfully!`);
-      setEdit(false)
+      setEdit(false);
     },
     onError: () => {
       toast.error(`Failed to edit declination reason Try again!`);
@@ -79,7 +77,7 @@ const DisapprovedVerificationsPage = () => {
   async function handleChange(e: FormEvent<HTMLFormElement>, id: string) {
     e.preventDefault();
     if (!declination_reason) {
-      alert('Enter a declination reason')
+      alert("Enter a declination reason");
       return false;
     } else {
       try {
@@ -91,6 +89,7 @@ const DisapprovedVerificationsPage = () => {
       }
     }
   }
+
   return (
     <div>
       <TopNav
@@ -115,8 +114,7 @@ const DisapprovedVerificationsPage = () => {
         </h3>
       )}
       <section className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4">
-        {showableData &&
-          showableData.length !== 0 &&
+        {showableData && showableData.length !== 0 ? (
           showableData.map((item) => (
             // <VerificationLog />
             <Card key={item.id} className="mt-4 w-full overflow-clip shadow-lg">
@@ -189,7 +187,12 @@ const DisapprovedVerificationsPage = () => {
                 )}
               </CardFooter>
             </Card>
-          ))}
+          ))
+        ) : (
+          <div suppressHydrationWarning>
+            {isLoading ? "Loading verification data" : "No data to be shown"}
+          </div>
+        )}
       </section>
     </div>
   );

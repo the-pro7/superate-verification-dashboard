@@ -11,7 +11,7 @@ import isBrandVerification from "@/utils/switchType";
 const SingleBrandVerificationPage = ({
   params: { id },
 }: {
-  params: { id: string | number };
+  params: { id: string };
 }) => {
   const role: string | null = isOnClientSide
     ? localStorage.getItem("role")
