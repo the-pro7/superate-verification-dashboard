@@ -6,8 +6,8 @@ import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton
 import { RoleSwitchProvider } from "@/components/role-switcher/RoleSwitcher";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { redirect } from "next/navigation";
 import { isOnClientSide } from "@/components/verification-log-view/VerificationLogsView";
+import { useRouter } from "next/navigation";
 
 export const queryClient = new QueryClient();
 
@@ -15,11 +15,12 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const accessToken = isOnClientSide
     ? sessionStorage.getItem("accessToken")
     : null;
+    const router = useRouter()
 
 
   // Protect route if user is not authenticated
   if (!accessToken) {
-    return redirect("/");
+    return router.push("/");
   }
 
   return (

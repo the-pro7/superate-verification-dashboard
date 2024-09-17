@@ -4,6 +4,7 @@ import {
   IBrandVerificationType,
   IInfluencerVerificationType,
   ILoginProps,
+  IRefreshType,
   RoleType,
 } from "@/types/app-type";
 import { revalidatePath } from "next/cache";
@@ -47,19 +48,20 @@ const logout = async () => {
   }
 }
 
-const refreshToken = async (refreshToken: string, accessToken: string) => {
+const refreshToken = async (refreshToken: string) => {
   const fetchOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`
+      // Authorization: `Bearer ${accessToken}`
     },
     body: JSON.stringify({refresh: refreshToken})
   }
   try {
     const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_BASE_URL}token/refresh/`, fetchOptions)
-    const data = await response.json()
+    const data: IRefreshType = await response.json()
     console.log(data)
+    return data
   } catch (error) {
     console.log(`An error occurred : ${error}`)
   }

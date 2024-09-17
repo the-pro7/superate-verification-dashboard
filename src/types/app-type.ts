@@ -58,3 +58,8 @@ export interface IActionButtonProps {
   accessToken: string;
   role: string;
 }
+
+export interface IRefreshType {
+  access: string,
+  access_expiration: string
+}

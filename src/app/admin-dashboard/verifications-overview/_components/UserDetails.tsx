@@ -13,6 +13,7 @@ import {
   IInfluencerVerificationType,
 } from "@/types/app-type";
 import isBrandVerification from "@/utils/switchType";
+import formatDate from "@/utils/dateFormatter";
 
 interface UserDetailsProps {
   id: string;
@@ -75,7 +76,7 @@ const UserDetails = ({
       {role === "influencer" ? (
         <div className="flex gap-3 flex-col md:flex-col">
           <div className="text-gray-700 mb-2">
-            <strong>Joined:</strong> 1st August, 2024
+            <strong>Joined:</strong> {formatDate(data.created_at)}
           </div>
           <div className="text-gray-700 mb-2">
             <strong>Government ID Number:</strong>{" "}
@@ -90,7 +91,7 @@ const UserDetails = ({
         // For brand
         <div className="flex gap-3 flex-col md:flex-col">
           <div className="text-gray-700 mb-2">
-            <strong>Joined:</strong> 1st August, 2024
+            <strong>Joined:</strong> {formatDate(data.created_at)}
           </div>
           <div className="text-gray-700 mb-2">
             <strong>Phone:</strong>{" "}
@@ -125,73 +126,51 @@ const UserDetails = ({
             <strong>Location:</strong>{" "}
             {(isBrandVerification(data) && data.location) || "None"}
           </div>
-          {data.is_denied && (
-            <div className="text-gray-700 mb-3">
-              <strong>Is Denied:</strong> true
-            </div>
-          )}
         </div>
       )}
 
-{/* Logic to show or not to show buttons if user is denied */}
-      {data.is_denied ? (
-        <div className="flex flex-col gap-2">
-          <h4>This user has been denied</h4>
-          <div>
-            <p>
-              This is the reason for declination:{" "}
-              <span>{data.declination_reason}</span>
-            </p>
-          </div>
+      {/* Logic to show or not to show buttons if user is denied */}
+      <div className="flex flex-col">
+        <div className="flex gap-3 flex-col md:flex-row">
+          <ApproveActionButton
+            dialogTrigger={
+              <DialogTrigger asChild>
+                <Button className="btn rounded-xl p-6 text-sm bg-green-300 text-green-800 text-[1em]">
+                  <FaCheckCircle className="mr-2" />
+                  Approve
+                </Button>
+              </DialogTrigger>
+            }
+            title="Approve"
+            description="Approve"
+            role={role}
+            roleId={id}
+            accessToken={adminAccessToken}
+          />
+          <DisapproveActionButton
+            dialogTrigger={
+              <DialogTrigger asChild>
+                <Button className="btn rounded-xl p-6 text-sm bg-red-300 text-red-800 text-[1em]">
+                  <FaTimesCircle className="mr-2" /> Decline
+                </Button>
+              </DialogTrigger>
+            }
+            title={`Disapprove brand '${
+              isBrandVerification(data) ? data.full_legal_name : data.full_name
+            }'`}
+            description={`Confirm disapproval of '${
+              isBrandVerification(data) ? data.full_legal_name : data.full_name
+            }'`}
+            role={role}
+            roleId={id}
+            accessToken={adminAccessToken}
+          />
         </div>
-      ) : (
-        // Buttons
-        <div className="flex flex-col">
-          <div className="flex gap-3 flex-col md:flex-row">
-            <ApproveActionButton
-              dialogTrigger={
-                <DialogTrigger asChild>
-                  <Button className="btn rounded-xl p-6 text-sm bg-green-300 text-green-800 text-[1em]">
-                    <FaCheckCircle className="mr-2" />
-                    Approve
-                  </Button>
-                </DialogTrigger>
-              }
-              title="Approve"
-              description="Approve"
-              role={role}
-              roleId={id}
-              accessToken={adminAccessToken}
-            />
-            <DisapproveActionButton
-              dialogTrigger={
-                <DialogTrigger asChild>
-                  <Button className="btn rounded-xl p-6 text-sm bg-red-300 text-red-800 text-[1em]">
-                    <FaTimesCircle className="mr-2" /> Decline
-                  </Button>
-                </DialogTrigger>
-              }
-              title={`Disapprove brand '${
-                isBrandVerification(data)
-                  ? data.full_legal_name
-                  : data.full_name
-              }'`}
-              description={`Confirm disapproval of '${
-                isBrandVerification(data)
-                  ? data.full_legal_name
-                  : data.full_name
-              }'`}
-              role={role}
-              roleId={id}
-              accessToken={adminAccessToken}
-            />
-          </div>
-          <span className="mt-6 text-gray-700 inline-flex gap-3 items-center">
-            <IoWarningOutline className="text-xl" />
-            <b>Note:</b>Any of these actions are not reversible
-          </span>
-        </div>
-      )}
+        <span className="mt-6 text-gray-700 inline-flex gap-3 items-center">
+          <IoWarningOutline className="text-xl" />
+          <b>Note:</b>Any of these actions are not reversible
+        </span>
+      </div>
     </div>
   );
 };
