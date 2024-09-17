@@ -30,12 +30,14 @@ const SingleBrandVerificationPage = ({
       ),
   });
 
+  // If an error occurs with fetching the data
+  if(error) {
+    return <div className="text-center text-2xl font-semibold mt-10">An error occurred: &#40;</div>;
+  }
 
-  console.log(data)
-  
-
+  // If data is in loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-2xl font-semibold mt-10">Loading...</div>;
   }
 
   return (

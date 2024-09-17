@@ -80,7 +80,8 @@ const ApprovedVerificationsPage = () => {
                       : item.government_issued_id_image
                   }
                   fill
-                  alt=""
+                  alt="Government issued ID image"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   className="object-cover col-span-1 row-span-1"
                 />
                 <span className="col-span-1 row-span-1 z-10 bg-white h-fit w-fit py-1 px-4 rounded-full text-sm shadow-xl font-semibold">

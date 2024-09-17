@@ -26,10 +26,14 @@ const SingleInfluencerVerificationPage = ({
       getSingleVerificationDetail(accessToken!, role!, id as string),
   });
 
-  console.log(data);
+  // If an error occurs with fetching the data
+  if(error) {
+    return <div className="text-center text-2xl font-semibold mt-10">An error occurred: &#40;</div>;
+  }
 
+  // If data is in loading state
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <div className="text-center text-2xl font-semibold mt-10">Loading...</div>;
   }
 
   return (

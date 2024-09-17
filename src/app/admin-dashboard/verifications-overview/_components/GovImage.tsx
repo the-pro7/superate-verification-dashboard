@@ -5,7 +5,7 @@ const GovImage = ({imgSrc}: {imgSrc: string}) => {
     <div className="w-[80%] max-h-full md:h-auto md:w-1/2 md:aspect-square rounded-md overflow-clip relative shadow-xl grid">
       <Image
         src={imgSrc}
-        alt="Government ID"
+        alt="Government ID Img"
         fill
         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="rounded-lg object-cover shadow-lg col-span-1 row-span-1"
