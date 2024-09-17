@@ -76,11 +76,6 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       ) : (
         <h1>No {role} verifications to view</h1>
       )}
-      {/* <VerificationLog
-        fullLegalName="Emma"
-        location="Tuobodom"
-        selfieImage="/logo.png"
-      /> */}
     </div>
   );
 };
