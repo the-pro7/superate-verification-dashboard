@@ -25,7 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${poppins.className}`}>
         {children}
-        <Toaster richColors position="top-center" closeButton/>
+        <Toaster richColors position="bottom-right" closeButton/>
       </body>
     </html>
   );

@@ -30,15 +30,16 @@ const SingleBrandVerificationPage = ({
       ),
   });
 
-  console.log(data);
-  // console.log(`The error is : ${error}`)
+
+  console.log(data)
+  
 
   if (isLoading) {
-    return <h1>Loading</h1>;
+    return <div>Loading...</div>;
   }
 
   return (
-    <div className="p-5 h-screen relative">
+    <div className="p-5 lg:h-screen">
       {/* Back button */}
       <BackButton />
       <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-fit md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 md:pt-10">

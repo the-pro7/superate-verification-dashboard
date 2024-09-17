@@ -48,7 +48,7 @@ export default function Home() {
             title="Go to admin verifications dashboard"
             onClick={() => {
               if (accessToken && typeof accessToken !== "undefined") {
-                router.push("/admin-dashboard");
+                router.push("/admin-dashboard/verifications-overview");
               }
             }}
           >

@@ -33,7 +33,7 @@ const SingleInfluencerVerificationPage = ({
   }
 
   return (
-    <div className="p-5 h-screen">
+    <div className="p-5 lg:h-screen">
       {/* Back button */}
       <BackButton />
 
