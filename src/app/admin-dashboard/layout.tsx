@@ -26,6 +26,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       className={`${styles.container} justify-between md:flex-col-reverse lg:flex-row relative overflow-hidden`}
+      suppressHydrationWarning
     >
       <QueryClientProvider client={queryClient}>
         <SidebarProvider>

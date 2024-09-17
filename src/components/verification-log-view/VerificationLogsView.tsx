@@ -51,7 +51,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
     : filteredData;
 
   return (
-    <div className="h-[65%] my-3 py-3 overflow-y-auto">
+    <div className="h-[65%] my-3 py-3 overflow-y-auto" suppressHydrationWarning>
       {query && (
         <div className="text-xl font-semibold">
           Showing search results for &apos;{query}&apos;

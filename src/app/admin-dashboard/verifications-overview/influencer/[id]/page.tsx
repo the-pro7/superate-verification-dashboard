@@ -41,7 +41,7 @@ const SingleInfluencerVerificationPage = ({
       {/* Back button */}
       <BackButton />
 
-      <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-max md:pt-0 md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 lg:pt-5">
+      <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-full md:pt-10 md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 lg:pt-0 lg:h-fit">
         <GovImage
           imgSrc={
             (!isBrandVerification(data!) &&
