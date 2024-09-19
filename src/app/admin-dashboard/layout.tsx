@@ -1,11 +1,11 @@
 "use client";
 import Sidebar from "@/components/sidebar/Sidebar";
 import styles from "./layout.module.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { SidebarProvider } from "@/components/expand-sidebar/ExpandSidebarButton";
 import { RoleSwitchProvider } from "@/components/role-switcher/RoleSwitcher";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { isOnClientSide } from "@/components/verification-log-view/VerificationLogsView";
 import { useRouter } from "next/navigation";
 
@@ -35,7 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <main className="w-full h-full px-8">{children}</main>
           </RoleSwitchProvider>
         </SidebarProvider>
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </div>
   );
