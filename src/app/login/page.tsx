@@ -4,7 +4,7 @@ import React from "react";
 const LoginPage = () => {
   return (
     <main className="h-screen flex items-center justify-center ">
-      <div className="w-fit md:w-[50%] lg:w-[35%] max-w-none flex flex-col gap-3 rounded-lg shadow-xl p-7 md:p-5 lg:p-10">
+      <div className="w-full p-5 py-8 max-w-xs md:max-w-md lg:max-w-lg flex flex-col gap-3 rounded-lg shadow-xl">
         <div className="flex flex-col gap-2 items-center">
           <h2 className="text-2xl font-bold tracking-wider text-center">
             Superate Authorization
