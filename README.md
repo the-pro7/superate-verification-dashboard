@@ -71,7 +71,7 @@ _This page gives a quick view of all verification data ever approved on the plat
 
 _This page allows you to view a **brand** verification data into details by showing information like the date they joined the app, their phone number etc._
 
-6. Single brand verifications page
+7. Single brand verifications page
 
 ---
 
@@ -79,7 +79,7 @@ _This page allows you to view a **brand** verification data into details by show
 
 _This page allows you to view an **influencer** verification data into details by showing information like the date they joined the app, their phone number etc._
 
-7. Selfie image view pop-over modal
+8. Selfie image view pop-over modal
 
 ---
 
