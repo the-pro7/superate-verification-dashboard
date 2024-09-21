@@ -6,9 +6,9 @@ import { isOnClientSide } from "@/components/verification-log-view/VerificationL
 import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
-import isBrandVerification from "@/utils/switchType";
+import isModeratorVerification from "@/utils/switchType";
 
-const SingleBrandVerificationPage = ({
+const SingleModeratorVerificationPage = ({
   params: { id },
 }: {
   params: { id: string };
@@ -21,7 +21,7 @@ const SingleBrandVerificationPage = ({
     : null;
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ["brand-verification"],
+    queryKey: ["moderator-verification"],
     queryFn: () =>
       getSingleVerificationDetail(
         accessToken as string,
@@ -47,13 +47,13 @@ const SingleBrandVerificationPage = ({
       <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-fit md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 md:pt-10">
         <GovImage
           imgSrc={
-            (isBrandVerification(data!) &&
+            (isModeratorVerification(data!) &&
               data.government_issued_business_id_image) as string
           }
         />
         <UserDetails
           id={id as string}
-          role="brand"
+          role="moderator"
           adminAccessToken={accessToken!}
           data={data!}
         />
@@ -62,4 +62,4 @@ const SingleBrandVerificationPage = ({
   );
 };
 
-export default SingleBrandVerificationPage;
+export default SingleModeratorVerificationPage;

@@ -1,7 +1,7 @@
 "use client";
 import React, { useContext, useRef, useState } from "react";
 import {
-  IBrandVerificationType,
+  IModeratorVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
 // import { RotatingLines } from "react-loader-spinner";
@@ -9,7 +9,7 @@ import { useVerificationDetails } from "@/hooks/query";
 import { RoleSwitchContext } from "../role-switcher/RoleSwitcher";
 import { RotatingLines } from "react-loader-spinner";
 import VerificationLog from "../verification-log/VerificationLog";
-import isBrandVerification from "@/utils/switchType";
+import isModeratorVerification from "@/utils/switchType";
 
 // Check if user is on client
 export const isOnClientSide: boolean = typeof window !== "undefined";
@@ -23,7 +23,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
 
   // Testing the custom query hook
   const { data, error, isLoading } = useVerificationDetails<
-    IBrandVerificationType,
+    IModeratorVerificationType,
     IInfluencerVerificationType
   >(accessToken!, role!);
 
@@ -36,15 +36,15 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
     );
 
   const filteredData:
-    | (IBrandVerificationType | IInfluencerVerificationType)[]
+    | (IModeratorVerificationType | IInfluencerVerificationType)[]
     | undefined = data?.filter(
-    (item: IBrandVerificationType | IInfluencerVerificationType) =>
+    (item: IModeratorVerificationType | IInfluencerVerificationType) =>
       item.is_approved === false && item.is_denied === false
   );
 
   const searchedData = query
     ? filteredData?.filter((item) =>
-        isBrandVerification(item)
+        isModeratorVerification(item)
           ? item.full_legal_name.toLowerCase().includes(query)
           : item.full_name.toLowerCase().includes(query)
       )
@@ -59,12 +59,12 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       )}
       {searchedData && searchedData?.length != 0 ? (
         searchedData.map(
-          (item: IBrandVerificationType | IInfluencerVerificationType) => (
+          (item: IModeratorVerificationType | IInfluencerVerificationType) => (
             <VerificationLog
               key={item.id}
               id={String(item.id)}
               fullLegalName={
-                isBrandVerification(item)
+                isModeratorVerification(item)
                   ? item.full_legal_name
                   : item.full_name
               }

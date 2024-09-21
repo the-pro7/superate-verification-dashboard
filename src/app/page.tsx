@@ -17,7 +17,7 @@ export default function Home() {
       setAccessToken(sessionStorage.getItem("accessToken"));
 
       if (!localStorage.getItem("role")) {
-        localStorage.setItem("role", "brand");
+        localStorage.setItem("role", "Moderator");
       }
     }
   }, []);

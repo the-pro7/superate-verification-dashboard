@@ -11,8 +11,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Superate Verifications App",
-  description: "Verifications dashboard for the superate application",
+  title: "Supr8 Verifications App",
+  description: "Verifications dashboard for the supr8 application",
   icons: "/logo.png",
 };
 
@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className}`}>
+      <body className={`${poppins.className}`} suppressHydrationWarning>
         {children}
         <Toaster richColors position="bottom-right" closeButton/>
       </body>
