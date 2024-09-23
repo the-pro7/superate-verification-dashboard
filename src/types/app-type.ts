@@ -27,15 +27,15 @@ export interface IVerificationBase {
   declined_date: string;
 }
 
-// Moderator verification interface
-export type IModeratorVerificationType = {
+// brand verification interface
+export type IBrandVerificationType = {
   government_issued_business_id_image: string;
   government_issued_business_id_number: string;
   full_legal_name: string;
   phone_number: string;
   website: string;
   address: string;
-  Moderator: number;
+  brand: number;
 } & IVerificationBase;
 
 // Influencer verification interface
@@ -47,7 +47,7 @@ export type IInfluencerVerificationType = {
 } & IVerificationBase;
 
 // Types aliases
-export type RoleType = "moderator" | "influencer";
+export type RoleType = "brand" | "influencer";
 
 // Actions
 export interface IActionButtonProps {

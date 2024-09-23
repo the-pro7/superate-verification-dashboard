@@ -1,7 +1,7 @@
 "use server";
 // Gey user role to make requests with
 import {
-  IModeratorVerificationType,
+  IBrandVerificationType,
   IInfluencerVerificationType,
   ILoginProps,
   IRefreshType,
@@ -68,7 +68,7 @@ const refreshToken = async (refreshToken: string) => {
 }
 
 // GET
-// api/admin/admin/Moderators-verification-details
+// api/admin/admin/brands-verification-details
 const getVerificationDetails = async <T, V>(
   accessToken: string,
   role: RoleType
@@ -197,7 +197,7 @@ const getSingleVerificationDetail = async (
   try {
     const response = await fetch(apiUrl, fetchOptions);
 
-    let data: IModeratorVerificationType | IInfluencerVerificationType =
+    let data: IBrandVerificationType | IInfluencerVerificationType =
       await response.json();
     return data;
   } catch (error) {

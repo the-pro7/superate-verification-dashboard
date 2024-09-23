@@ -11,7 +11,7 @@ export type RoleSwitchType = {
 
 // Context for role switching
 export const RoleSwitchContext = React.createContext<RoleSwitchType>({
-  role: "moderator",
+  role: "brand",
   switchRole: () => "",
 });
 
@@ -22,16 +22,16 @@ export const RoleSwitchProvider = ({
   children: React.ReactNode;
 }) => {
   // Setup role state using RoleType type declaration
-  //const [role, setRole] = useState<RoleType>("Moderator");
+  //const [role, setRole] = useState<RoleType>("brand");
   const [role, setRole] = useState<RoleType>(() =>
-    isOnClientSide ? localStorage.getItem("moderator")! as RoleType || "moderator" : "moderator"
+    isOnClientSide ? localStorage.getItem("brand")! as RoleType || "brand" : "brand"
   );
 
   // Check if there is already a stored role in ls
   useEffect(() => {
     // Check if there is already a stored role in ls
     const storedRole =
-      typeof window !== "undefined" ? localStorage.getItem("moderator") as RoleType : null;
+      typeof window !== "undefined" ? localStorage.getItem("brand") as RoleType : null;
 
     // Make sure typeof storedRole is not null
     if (typeof storedRole === "string") {
@@ -61,14 +61,14 @@ const RoleSwitcher: React.FC = () => {
   return (
     <div className="flex items-center justify-center gap-1 border-2 border-sky-500 rounded-lg w-max overflow-clip mr-8 p-1">
       <button
-        title="View for Moderators"
+        title="View for brands"
         type="button"
-        onClick={() => switchRole("moderator")}
+        onClick={() => switchRole("brand")}
         className={`px-2 py-[.25rem] rounded-sm hover:bg-gray-200 ${
-          role === "moderator" && "bg-sky-500 text-white"
+          role === "brand" && "bg-sky-500 text-white"
         }`}
       >
-        Moderators
+        Brands
       </button>
       <button
         title="View for Influencers"

@@ -17,10 +17,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { isOnClientSide } from "@/components/verification-log-view/VerificationLogsView";
 import { useVerificationDetails } from "@/hooks/query";
 import {
-  IModeratorVerificationType,
+  IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-import isModeratorVerification from "@/utils/switchType";
+import isbrandVerification from "@/utils/switchType";
 import Image from "next/image";
 import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
@@ -44,13 +44,13 @@ const DisapprovedVerificationsPage = () => {
     : null;
 
   const { data, error, isLoading } = useVerificationDetails<
-    IModeratorVerificationType,
+    IBrandVerificationType,
     IInfluencerVerificationType
   >(accessToken!, role!);
 
   const filteredData = data?.filter((item) => item.is_denied === true);
   const showableData = filteredData?.filter((item) =>
-    isModeratorVerification(item)
+    isbrandVerification(item)
       ? item.full_legal_name.toLocaleLowerCase().includes(query)
       : item.full_name.toLocaleLowerCase().includes(query)
   );
@@ -121,7 +121,7 @@ const DisapprovedVerificationsPage = () => {
               <CardHeader className="relative h-40 grid">
                 <Image
                   src={
-                    isModeratorVerification(item)
+                    isbrandVerification(item)
                       ? item.government_issued_business_id_image
                       : item.government_issued_id_image
                   }
@@ -146,7 +146,7 @@ const DisapprovedVerificationsPage = () => {
                   </div>
                   <CardTitle className="flex gap-2">
                     <h1>
-                      {isModeratorVerification(item)
+                      {isbrandVerification(item)
                         ? item.full_legal_name
                         : item.full_name}
                     </h1>
@@ -156,7 +156,7 @@ const DisapprovedVerificationsPage = () => {
                   </CardTitle>
                 </div>
                 <CardDescription>
-                  {isModeratorVerification(item)
+                  {isbrandVerification(item)
                     ? `Location - ${item.location}`
                     : `Country - ${item.country}`}
                 </CardDescription>

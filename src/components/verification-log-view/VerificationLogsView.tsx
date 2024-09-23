@@ -1,15 +1,14 @@
 "use client";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext } from "react";
 import {
-  IModeratorVerificationType,
+  IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-// import { RotatingLines } from "react-loader-spinner";
 import { useVerificationDetails } from "@/hooks/query";
 import { RoleSwitchContext } from "../role-switcher/RoleSwitcher";
 import { RotatingLines } from "react-loader-spinner";
 import VerificationLog from "../verification-log/VerificationLog";
-import isModeratorVerification from "@/utils/switchType";
+import isBrandVerification from "@/utils/switchType";
 
 // Check if user is on client
 export const isOnClientSide: boolean = typeof window !== "undefined";
@@ -23,35 +22,45 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
 
   // Testing the custom query hook
   const { data, error, isLoading } = useVerificationDetails<
-    IModeratorVerificationType,
+    IBrandVerificationType,
     IInfluencerVerificationType
   >(accessToken!, role!);
 
   if (isLoading)
     return (
       <h1 className="inline-flex items-center gap-2 text-2xl">
-        {" "}
+        <RotatingLines
+          visible={true}
+          height="20"
+          width="20"
+          color="white"
+          strokeWidth="2"
+          animationDuration="0.75"
+          ariaLabel="rotating-lines-loading"
+          // wrapperStyle={{}}
+          wrapperClass=""
+        />
         Loading verification data...
       </h1>
     );
 
   const filteredData:
-    | (IModeratorVerificationType | IInfluencerVerificationType)[]
+    | (IBrandVerificationType | IInfluencerVerificationType)[]
     | undefined = data?.filter(
-    (item: IModeratorVerificationType | IInfluencerVerificationType) =>
+    (item: IBrandVerificationType | IInfluencerVerificationType) =>
       item.is_approved === false && item.is_denied === false
   );
 
   const searchedData = query
     ? filteredData?.filter((item) =>
-        isModeratorVerification(item)
+        isBrandVerification(item)
           ? item.full_legal_name.toLowerCase().includes(query)
           : item.full_name.toLowerCase().includes(query)
       )
     : filteredData;
 
   return (
-    <div className="h-[65%] my-3 py-3 overflow-y-auto" suppressHydrationWarning>
+    <div className="h-[65%] my-3 py-3 overflow-y-auto">
       {query && (
         <div className="text-xl font-semibold">
           Showing search results for &apos;{query}&apos;
@@ -59,12 +68,12 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
       )}
       {searchedData && searchedData?.length != 0 ? (
         searchedData.map(
-          (item: IModeratorVerificationType | IInfluencerVerificationType) => (
+          (item: IBrandVerificationType | IInfluencerVerificationType) => (
             <VerificationLog
               key={item.id}
               id={String(item.id)}
               fullLegalName={
-                isModeratorVerification(item)
+                isBrandVerification(item)
                   ? item.full_legal_name
                   : item.full_name
               }

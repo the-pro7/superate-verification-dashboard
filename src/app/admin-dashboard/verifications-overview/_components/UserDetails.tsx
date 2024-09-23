@@ -9,17 +9,17 @@ import Image from "next/image";
 import ApproveActionButton from "@/components/verification-log-view/_components/ApproveActionButton";
 import DisapproveActionButton from "@/components/verification-log-view/_components/DisapproveActionButton";
 import {
-  IModeratorVerificationType,
+  IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-import isModeratorVerification from "@/utils/switchType";
+import isbrandVerification from "@/utils/switchType";
 import formatDate from "@/utils/dateFormatter";
 
 interface UserDetailsProps {
   id: string;
-  role: "moderator" | "influencer";
+  role: "brand" | "influencer";
   adminAccessToken: string;
-  data: IModeratorVerificationType | IInfluencerVerificationType;
+  data: IBrandVerificationType | IInfluencerVerificationType;
 }
 
 const UserDetails = ({
@@ -30,7 +30,7 @@ const UserDetails = ({
 }: UserDetailsProps) => {
   return (
     <div className="border-2 border-slate-100 bg-slate-100 p-7 rounded-lg">
-      {/* User (Moderator/Influencer) */}
+      {/* User (brand/Influencer) */}
       <div className="flex items-start">
         <div className="flex items-center justify-center gap-3 mb-4">
           {/* Image container */}
@@ -45,7 +45,7 @@ const UserDetails = ({
                     src={data?.selfie_image || "/selfie2.jpeg"}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    alt="Moderator Selfie Image"
+                    alt="brand Selfie Image"
                     className="object-cover"
                   />
                 </DialogTrigger>
@@ -58,7 +58,7 @@ const UserDetails = ({
           </div>
           <div className="flex flex-col">
             <h1 className="text-3xl md:font-5xl lg:font-7xl font-semibold mb-2">
-              {isModeratorVerification(data)
+              {isbrandVerification(data)
                 ? data?.full_legal_name || "None"
                 : data?.full_name || "None"}
             </h1>
@@ -80,7 +80,7 @@ const UserDetails = ({
           </div>
           <div className="text-gray-700 mb-2">
             <strong>Government ID Number:</strong>{" "}
-            {(!isModeratorVerification(data) && data.government_issued_id_number) ||
+            {(!isbrandVerification(data) && data.government_issued_id_number) ||
               "None"}
           </div>
           <div className="text-gray-700 mb-10">
@@ -88,23 +88,23 @@ const UserDetails = ({
           </div>
         </div>
       ) : (
-        // For Moderator
+        // For brand
         <div className="flex gap-3 flex-col md:flex-col">
           <div className="text-gray-700 mb-2">
             <strong>Joined:</strong> {formatDate(data.created_at)}
           </div>
           <div className="text-gray-700 mb-2">
             <strong>Phone:</strong>{" "}
-            {isModeratorVerification(data) && data.phone_number}
+            {isbrandVerification(data) && data.phone_number}
           </div>
           <div className="text-gray-700 mb-2">
             <strong>Government ID Number:</strong>{" "}
-            {isModeratorVerification(data) &&
+            {isbrandVerification(data) &&
               data.government_issued_business_id_number}
           </div>
           <div className="text-gray-700">
             <strong>Website:</strong>{" "}
-            {isModeratorVerification(data) && data.website !== "" ? (
+            {isbrandVerification(data) && data.website !== "" ? (
               <a
                 href={data.website}
                 target="_blank"
@@ -120,11 +120,11 @@ const UserDetails = ({
           </div>
           <div className="text-gray-700 mb-1">
             <strong>Address:</strong>{" "}
-            {(isModeratorVerification(data) && data.address) || "None"}
+            {(isbrandVerification(data) && data.address) || "None"}
           </div>
           <div className="text-gray-700 mb-3">
             <strong>Location:</strong>{" "}
-            {(isModeratorVerification(data) && data.location) || "None"}
+            {(isbrandVerification(data) && data.location) || "None"}
           </div>
         </div>
       )}
@@ -155,11 +155,11 @@ const UserDetails = ({
                 </Button>
               </DialogTrigger>
             }
-            title={`Disapprove Moderator '${
-              isModeratorVerification(data) ? data.full_legal_name : data.full_name
+            title={`Disapprove brand '${
+              isbrandVerification(data) ? data.full_legal_name : data.full_name
             }'`}
             description={`Confirm disapproval of '${
-              isModeratorVerification(data) ? data.full_legal_name : data.full_name
+              isbrandVerification(data) ? data.full_legal_name : data.full_name
             }'`}
             role={role}
             roleId={id}
