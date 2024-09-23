@@ -24,14 +24,14 @@ export const RoleSwitchProvider = ({
   // Setup role state using RoleType type declaration
   //const [role, setRole] = useState<RoleType>("brand");
   const [role, setRole] = useState<RoleType>(() =>
-    isOnClientSide ? localStorage.getItem("role")! || "brand" : "brand"
+    isOnClientSide ? localStorage.getItem("brand")! as RoleType || "brand" : "brand"
   );
 
   // Check if there is already a stored role in ls
   useEffect(() => {
     // Check if there is already a stored role in ls
     const storedRole =
-      typeof window !== "undefined" ? localStorage.getItem("role") : null;
+      typeof window !== "undefined" ? localStorage.getItem("brand") as RoleType : null;
 
     // Make sure typeof storedRole is not null
     if (typeof storedRole === "string") {
@@ -61,7 +61,7 @@ const RoleSwitcher: React.FC = () => {
   return (
     <div className="flex items-center justify-center gap-1 border-2 border-sky-500 rounded-lg w-max overflow-clip mr-8 p-1">
       <button
-        title="View for Brands"
+        title="View for brands"
         type="button"
         onClick={() => switchRole("brand")}
         className={`px-2 py-[.25rem] rounded-sm hover:bg-gray-200 ${

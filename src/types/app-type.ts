@@ -27,7 +27,7 @@ export interface IVerificationBase {
   declined_date: string;
 }
 
-// Brand verification interface
+// brand verification interface
 export type IBrandVerificationType = {
   government_issued_business_id_image: string;
   government_issued_business_id_number: string;
@@ -47,7 +47,7 @@ export type IInfluencerVerificationType = {
 } & IVerificationBase;
 
 // Types aliases
-export type RoleType = "brand" | "influencer" | string;
+export type RoleType = "brand" | "influencer";
 
 // Actions
 export interface IActionButtonProps {

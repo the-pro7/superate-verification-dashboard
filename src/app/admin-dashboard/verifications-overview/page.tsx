@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import TopNav from "@/components/dashboard-topnav/TopNav";
 import RoleSwitcher from "@/components/role-switcher/RoleSwitcher";
 import PageText from "@/components/page-text/PageText";
-import BrandsVerificationLogsView from "@/components/verification-log-view/VerificationLogsView";
+import brandsVerificationLogsView from "@/components/verification-log-view/VerificationLogsView";
 
 const AllVerificationsPage = () => {
   const [query, setQuery] = useState<string>("");
@@ -19,7 +19,7 @@ const AllVerificationsPage = () => {
         <RoleSwitcher />
       </div>
       {/* <VerificationLog selfieImage="/logo.png" fullLegalName="Emmanuel Ameyaw" location="Tamale, Ghana"/> */}
-      <BrandsVerificationLogsView query={query} />
+      <brandsVerificationLogsView query={query} />
     </>
   );
 };

@@ -18,7 +18,7 @@ import {
   IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-import isBrandVerification from "@/utils/switchType";
+import isbrandVerification from "@/utils/switchType";
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 
@@ -39,7 +39,7 @@ const ApprovedVerificationsPage = () => {
   const filteredData = data?.filter((item) => item.is_approved === true);
   const showableData = query
     ? filteredData?.filter((item) =>
-        isBrandVerification(item)
+        isbrandVerification(item)
           ? item.full_legal_name.toLocaleLowerCase().includes(query)
           : item.full_name.toLocaleLowerCase().includes(query)
       )
@@ -75,7 +75,7 @@ const ApprovedVerificationsPage = () => {
               <CardHeader className="relative h-40 grid">
                 <Image
                   src={
-                    isBrandVerification(item)
+                    isbrandVerification(item)
                       ? item.government_issued_business_id_image
                       : item.government_issued_id_image
                   }
@@ -100,7 +100,7 @@ const ApprovedVerificationsPage = () => {
                   </div>
                   <CardTitle className="flex gap-2">
                     <div>
-                      {isBrandVerification(item)
+                      {isbrandVerification(item)
                         ? item.full_legal_name
                         : item.full_name}
                     </div>
@@ -110,7 +110,7 @@ const ApprovedVerificationsPage = () => {
                   </CardTitle>
                 </div>
                 <CardDescription className="mt-2">
-                  {isBrandVerification(item)
+                  {isbrandVerification(item)
                     ? `Location - ${item.location}`
                     : `Country - ${item.country}`}
                 </CardDescription>

@@ -1,10 +1,9 @@
 "use client";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext } from "react";
 import {
   IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-// import { RotatingLines } from "react-loader-spinner";
 import { useVerificationDetails } from "@/hooks/query";
 import { RoleSwitchContext } from "../role-switcher/RoleSwitcher";
 import { RotatingLines } from "react-loader-spinner";
@@ -30,7 +29,17 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
   if (isLoading)
     return (
       <h1 className="inline-flex items-center gap-2 text-2xl">
-        {" "}
+        <RotatingLines
+          visible={true}
+          height="20"
+          width="20"
+          color="white"
+          strokeWidth="2"
+          animationDuration="0.75"
+          ariaLabel="rotating-lines-loading"
+          // wrapperStyle={{}}
+          wrapperClass=""
+        />
         Loading verification data...
       </h1>
     );
@@ -51,7 +60,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
     : filteredData;
 
   return (
-    <div className="h-[65%] my-3 py-3 overflow-y-auto" suppressHydrationWarning>
+    <div className="h-[65%] my-3 py-3 overflow-y-auto">
       {query && (
         <div className="text-xl font-semibold">
           Showing search results for &apos;{query}&apos;

@@ -20,7 +20,7 @@ import {
   IBrandVerificationType,
   IInfluencerVerificationType,
 } from "@/types/app-type";
-import isBrandVerification from "@/utils/switchType";
+import isbrandVerification from "@/utils/switchType";
 import Image from "next/image";
 import React, { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
@@ -50,7 +50,7 @@ const DisapprovedVerificationsPage = () => {
 
   const filteredData = data?.filter((item) => item.is_denied === true);
   const showableData = filteredData?.filter((item) =>
-    isBrandVerification(item)
+    isbrandVerification(item)
       ? item.full_legal_name.toLocaleLowerCase().includes(query)
       : item.full_name.toLocaleLowerCase().includes(query)
   );
@@ -121,7 +121,7 @@ const DisapprovedVerificationsPage = () => {
               <CardHeader className="relative h-40 grid">
                 <Image
                   src={
-                    isBrandVerification(item)
+                    isbrandVerification(item)
                       ? item.government_issued_business_id_image
                       : item.government_issued_id_image
                   }
@@ -146,7 +146,7 @@ const DisapprovedVerificationsPage = () => {
                   </div>
                   <CardTitle className="flex gap-2">
                     <h1>
-                      {isBrandVerification(item)
+                      {isbrandVerification(item)
                         ? item.full_legal_name
                         : item.full_name}
                     </h1>
@@ -156,7 +156,7 @@ const DisapprovedVerificationsPage = () => {
                   </CardTitle>
                 </div>
                 <CardDescription>
-                  {isBrandVerification(item)
+                  {isbrandVerification(item)
                     ? `Location - ${item.location}`
                     : `Country - ${item.country}`}
                 </CardDescription>
