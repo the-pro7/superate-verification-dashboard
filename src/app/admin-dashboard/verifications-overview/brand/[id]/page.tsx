@@ -6,9 +6,9 @@ import { isOnClientSide } from "@/components/verification-log-view/VerificationL
 import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
-import isbrandVerification from "@/utils/switchType";
+import isBrandVerification from "@/utils/switchType";
 
-const SinglebrandVerificationPage = ({
+const SingleBrandVerificationPage = ({
   params: { id },
 }: {
   params: { id: string };
@@ -47,7 +47,7 @@ const SinglebrandVerificationPage = ({
       <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-fit md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 md:pt-10">
         <GovImage
           imgSrc={
-            (isbrandVerification(data!) &&
+            (isBrandVerification(data!) &&
               data.government_issued_business_id_image) as string
           }
         />
@@ -62,4 +62,4 @@ const SinglebrandVerificationPage = ({
   );
 };
 
-export default SinglebrandVerificationPage;
+export default SingleBrandVerificationPage;

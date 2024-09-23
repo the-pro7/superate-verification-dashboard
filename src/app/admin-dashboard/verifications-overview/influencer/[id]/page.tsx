@@ -6,7 +6,7 @@ import { isOnClientSide } from "@/components/verification-log-view/VerificationL
 import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
-import isbrandVerification from "@/utils/switchType";
+import isBrandVerification from "@/utils/switchType";
 
 const SingleInfluencerVerificationPage = ({
   params: { id },
@@ -44,7 +44,7 @@ const SingleInfluencerVerificationPage = ({
       <div className="flex flex-col-reverse h-[80%] overflow-y-auto md:h-full md:pt-10 md:overflow-y-hidden gap-6 md:flex-row md:gap-6 justify-around items-center pt-0 lg:pt-0 lg:h-fit">
         <GovImage
           imgSrc={
-            (!isbrandVerification(data!) &&
+            (!isBrandVerification(data!) &&
               data?.government_issued_id_image) as string
           }
         />

@@ -19,14 +19,6 @@ import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { ILoginDataProps } from "@/types/app-type";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import Link from "next/link";
 
 const formSchema = z.object({
   username: z.string().min(8, {
@@ -37,9 +29,6 @@ const formSchema = z.object({
   }),
   password: z.string().min(8, {
     message: "You need to provide a password to continue",
-  }),
-  role: z.string({
-    required_error: "You must select a role to continue.",
   }),
 });
 
@@ -68,6 +57,7 @@ export default function LoginForm() {
     if (navigator.onLine) {
       try {
         const data: ILoginDataProps = await login(values);
+        console.log(data);
 
         if (!data) {
           setError("root", {
@@ -146,30 +136,6 @@ export default function LoginForm() {
               <FormControl>
                 <Input placeholder="Password" {...field} type="password" />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="role"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Your role</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Choose a role" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="moderator">Moderator</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormDescription>
-                Choose a role for the Supr8 verifications dashboard
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}

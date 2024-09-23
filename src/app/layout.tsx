@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.className}`} suppressHydrationWarning>
+      <body className={`${poppins.className}`} suppressHydrationWarning={true}>
         {children}
         <Toaster richColors position="bottom-right" closeButton/>
       </body>
