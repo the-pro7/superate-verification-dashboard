@@ -11,7 +11,6 @@ import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { isOnClientSide } from "../verification-log-view/VerificationLogsView";
 import { approveUser } from "@/utils/dataFetch";
-import ImageFullView from "@/app/admin-dashboard/[verifications-overview]/brand/_components/ImageFullView";
 import { DialogTrigger } from "@/components/ui/dialog";
 import DisapproveActionButton from "../verification-log-view/_components/DisapproveActionButton";
 import ApproveActionButton from "../verification-log-view/_components/ApproveActionButton";
