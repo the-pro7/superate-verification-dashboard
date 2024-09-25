@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a2ff31e6-9b40-4b22-87d3-98f4c3e846c1/deploy-status)](https://app.netlify.com/sites/yearlingbanana/deploys)
+
 # Superate Verifications Platform
 This is the official documentation for the superate admin verifications platform for brands and influencers from [Superate](https://www.superate.app). This platform will allow brands and influencers signed up to Superate to either be approved or disapproved.
 
