@@ -16,9 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Dispatch, SetStateAction } from "react";
-import { RotatingLines } from "react-loader-spinner";
 import { disapproveUser } from "@/utils/dataFetch";
 import { toast } from "sonner";
+import BeatLoader from "react-spinners/BeatLoader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type DeclinationFormProps = {
@@ -96,7 +96,10 @@ export default function DeclinationReasonForm({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 md:w-2/3">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="w-full space-y-6 md:w-2/3"
+      >
         <FormField
           control={form.control}
           name="declination_reason"
@@ -126,16 +129,11 @@ export default function DeclinationReasonForm({
             className="inline-flex items-center font-medium gap-1 px-4 tracking-widest"
           >
             {mutation.isPending && (
-              <RotatingLines
-                visible={true}
-                height="20"
-                width="20"
-                color="white"
-                strokeWidth="2"
-                animationDuration="0.75"
-                ariaLabel="rotating-lines-loading"
-                // wrapperStyle={{}}
-                wrapperClass=""
+              <BeatLoader
+                loading={mutation.isPending}
+                aria-label="Loading Spinner"
+                size={6}
+                color="#fff"
               />
             )}
             {mutation.isPending ? "Submitting..." : "Submit"}

@@ -6,9 +6,9 @@ import {
 } from "@/types/app-type";
 import { useVerificationDetails } from "@/hooks/query";
 import { RoleSwitchContext } from "../role-switcher/RoleSwitcher";
-import { RotatingLines } from "react-loader-spinner";
 import VerificationLog from "../verification-log/VerificationLog";
 import isBrandVerification from "@/utils/switchType";
+import BeatLoader from "react-spinners/BeatLoader";
 
 // Check if user is on client
 export const isOnClientSide: boolean = typeof window !== "undefined";
@@ -29,17 +29,7 @@ const VerificationLogsView = ({ query }: { query?: string }) => {
   if (isLoading)
     return (
       <h1 className="inline-flex items-center gap-2 text-2xl">
-        <RotatingLines
-          visible={true}
-          height="20"
-          width="20"
-          color="white"
-          strokeWidth="2"
-          animationDuration="0.75"
-          ariaLabel="rotating-lines-loading"
-          // wrapperStyle={{}}
-          wrapperClass=""
-        />
+        <BeatLoader loading={isLoading} aria-label="Loading Spinner" size={10}/>
         Loading verification data...
       </h1>
     );

@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,10 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { login } from "@/utils/dataFetch";
-import { RotatingLines } from "react-loader-spinner";
 import { useRouter } from "next/navigation";
 import { ILoginDataProps } from "@/types/app-type";
 import { toast } from "sonner";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const formSchema = z.object({
   username: z.string().min(8, {
@@ -63,8 +62,6 @@ export default function LoginForm() {
           setError("root", {
             message: "Failed to login, Check your network and try again.",
           });
-
-          return false;
         }
 
         if (data.access && data.refresh && data.user) {
@@ -146,16 +143,11 @@ export default function LoginForm() {
           className="inline-flex items-center font-medium gap-1 px-4 tracking-widest"
         >
           {isSubmitting && (
-            <RotatingLines
-              visible={true}
-              height="20"
-              width="20"
-              color="white"
-              strokeWidth="2"
-              animationDuration="0.75"
-              ariaLabel="rotating-lines-loading"
-              // wrapperStyle={{}}
-              wrapperClass=""
+            <BeatLoader
+              loading={isSubmitting}
+              aria-label="Loading Spinner"
+              size={6}
+              color="#fff"
             />
           )}
           {isSubmitting ? "Logging in..." : "Login"}
