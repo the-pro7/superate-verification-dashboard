@@ -7,6 +7,7 @@ import BackButton from "../../_components/BackButton";
 import GovImage from "../../_components/GovImage";
 import UserDetails from "../../_components/UserDetails";
 import isBrandVerification from "@/utils/switchType";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const SingleInfluencerVerificationPage = ({
   params: { id },
@@ -27,13 +28,26 @@ const SingleInfluencerVerificationPage = ({
   });
 
   // If an error occurs with fetching the data
-  if(error) {
-    return <div className="text-center text-2xl font-semibold mt-10">An error occurred: &#40;</div>;
+  if (error) {
+    return (
+      <div className="text-center text-2xl font-semibold mt-10">
+        An error occurred: &#40;
+      </div>
+    );
   }
 
   // If data is in loading state
   if (isLoading) {
-    return <div className="text-center text-2xl font-semibold mt-10">Loading...</div>;
+    return (
+      <div className="text-center text-2xl font-semibold mt-10">
+        <BeatLoader
+          loading={isLoading}
+          size={10}
+          aria-label="Loading Spinner"
+        />{" "}
+        Loading...
+      </div>
+    );
   }
 
   return (

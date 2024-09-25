@@ -56,7 +56,6 @@ export default function LoginForm() {
     if (navigator.onLine) {
       try {
         const data: ILoginDataProps = await login(values);
-        console.log(data);
 
         if (!data) {
           setError("root", {
