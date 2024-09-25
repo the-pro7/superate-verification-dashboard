@@ -53,32 +53,40 @@ export default function LoginForm() {
   } = form;
 
   async function onSubmit(values: UserForm) {
-    if (navigator.onLine) {
-      try {
-        const data: ILoginDataProps = await login(values);
-
-        if (!data) {
-          setError("root", {
-            message: "Failed to login, Check your network and try again.",
-          });
-        }
-
-        if (data.access && data.refresh && data.user) {
-          sessionStorage.setItem("accessToken", data.access);
-          sessionStorage.setItem("refreshToken", data.refresh);
-          router.push("/admin-dashboard/verifications-overview");
-          toast.success("Signed in successfully!");
-        }
-      } catch (error: any) {
-        console.error(`This is the error: ${error}`);
-      }
-    } else {
+    if (!navigator.onLine) {
       setError("root", {
         message: "You're not online, connect to a network",
       });
+      return;
+    }
+  
+    try {
+      const data: ILoginDataProps | null = await login(values);
+  
+      if (!data || !data.access || !data.refresh || !data.user) {
+        setError("root", {
+          message: "Failed to login, check your network and try again.",
+        });
+        return;
+      }
+  
+      sessionStorage.setItem("accessToken", data.access);
+      sessionStorage.setItem("refreshToken", data.refresh);
+  
+      router.push("/admin-dashboard/verifications-overview");
+      toast.success("Signed in successfully!");
+  
+    } catch (error: unknown) {
+      // Check if it's a known error type or general
+      if (error instanceof Error) {
+        setError("root", { message: error.message || "An unknown error occurred" });
+      } else {
+        setError("root", { message: "An error occurred during login" });
+      }
+      console.error("Login error:", error);
     }
   }
-
+  
   return (
     <Form {...form}>
       <form
