@@ -17,7 +17,7 @@ const Sidebar = () => {
   const userRefreshToken = sessionStorage.getItem("refreshToken");
   const [refreshAccessToken, setRefreshAccessToken] = useState<boolean>(false);
 
-  const router = useRouter()
+  const router = useRouter();
 
   const { data, isFetching, error } = useQuery({
     queryKey: ["refresh-token"],
@@ -75,6 +75,7 @@ const Sidebar = () => {
           <Image
             src="/logo.png"
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt="Superate logo"
             className="object-cover"
           />

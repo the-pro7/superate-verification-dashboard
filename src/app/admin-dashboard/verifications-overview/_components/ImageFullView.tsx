@@ -1,3 +1,4 @@
+"use client";
 import React, { ReactNode } from "react";
 import {
   Dialog,
@@ -32,7 +33,13 @@ const ImageFullView: React.FC<IImageFullViewProps> = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="relative aspect-square w-full overflow-clip rounded-lg">
-          <Image src={imgSrc} fill alt={altText} className="object-cover"/>
+          <Image
+            src={imgSrc}
+            fill
+            alt={altText}
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
       </DialogContent>
     </Dialog>
